@@ -1,3 +1,17 @@
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+.btn:focus{
+  outline: none;
+  box-shadow: none;
+}
+
 body{
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',sans-serif;
@@ -18,6 +32,8 @@ footer{
 	max-width: 25em;
 	margin: auto;
 }
-.tile > img{
-  width: 90%;
+.cell > img{
+  width: 80%;
+  /* for filters:
+  https://codepen.io/sosuke/pen/Pjoqqp */
 }
