@@ -37,3 +37,26 @@ footer{
   /* for filters:
   https://codepen.io/sosuke/pen/Pjoqqp */
 }
+
+/* Animations */
+
+.cell > .zoomIn {
+  animation-name: zoomIn;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+}
+@keyframes zoomIn {
+  0% {width: 0%;}
+  50% {width: 100%;}
+  100% {width: 80%;}
+}
+.cell > .zoomOut {
+  animation-name: zoomOut;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+}
+@keyframes zoomOut {
+  0% {width: 80%;}
+  50% {width: 100%;}
+  100% {width: 0%;}
+}
