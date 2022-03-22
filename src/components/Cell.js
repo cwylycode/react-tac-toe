@@ -5,14 +5,21 @@ import { TOKENS } from "../lib/constants.js"
 import { useEffect, useState } from "react"
 
 export default function Cell({ cellID, cellValue, borders, handleClick }) {
-  const [icon, setIcon] = useState(null)
+
+  const [icon, setIcon] = useState("")
   const [animation, setAnimation] = useState("")
 
   useEffect(() => {
-    setAnimation(cellValue ? "zoomIn" : "zoomOut")
-    if (cellValue === TOKENS.X) setIcon(iconX)
-    else if (cellValue === TOKENS.O) setIcon(iconO)
-    else setIcon("")
+    if (cellValue) {
+      setAnimation("zoom-in")
+      if (cellValue === TOKENS.X) setIcon(iconX)
+      else if (cellValue === TOKENS.O) setIcon(iconO)
+    }
+    else {
+      setAnimation("zoom-out")
+      const iconDelay = setTimeout(() => { setIcon("") }, 250);
+      return () => { clearTimeout(iconDelay) }
+    }
   }, [cellValue])
 
   return (

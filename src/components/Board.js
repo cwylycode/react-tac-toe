@@ -3,9 +3,8 @@ import Cell from "./Cell"
 
 import { useEffect, useState } from "react"
 
-export default function Board({ gridSize, onGameOver, playerToken, cpuToken, history }) {
+export default function Board({ boardValues, setBoardValues, gridSize, onGameOver, playerToken, cpuToken, aiDifficulty }) {
 
-  const [boardValues, setBoardValues] = useState(null)
   const [grid, setGrid] = useState([])
   const [winningLines, setWinningLines] = useState([])
   const [playersTurn, setPlayersTurn] = useState(true)
@@ -16,8 +15,7 @@ export default function Board({ gridSize, onGameOver, playerToken, cpuToken, his
   }, [gridSize, playerToken])
 
   useEffect(() => {
-    // Prevent rendering the grid twice on startup
-    if (boardValues) updateGrid()
+    if (boardValues) updateGrid() // Prevent rendering the grid twice on startup
     if (status) onGameOver(status)
   }, [boardValues, status]) // Status needed for cell-click reset to work
 
@@ -27,7 +25,10 @@ export default function Board({ gridSize, onGameOver, playerToken, cpuToken, his
     for (let line of winningLines) {
       for (let i = 0; i < gridSize; i++) arr[i] = boardValues[line[i]]
       // Winner declared, return token
-      if (arr.every(function (e) { return e === arr[0] })) setStatus(arr[0])
+      if (arr.every(function (e) { return e === arr[0] })) {
+        setStatus(arr[0])
+        return
+      }
     }
     // All cells filled with no winner
     if (boardValues.every(function (e) { return e !== null })) setStatus("draw")
@@ -54,7 +55,7 @@ export default function Board({ gridSize, onGameOver, playerToken, cpuToken, his
     })
   }
 
-  // Reset board and history - user override means user goes first, even if not their turn
+  // Reset board - user override means user goes first, even if not their turn
   function reset(userOverride = false) {
     setBoardValues(Array(gridSize * gridSize).fill(null))
     setWinningLines(LINES[gridSize - 3])

@@ -6,7 +6,6 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
-
 .btn:focus{
   outline: none;
   box-shadow: none;
@@ -18,20 +17,12 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.color-react{
-  color: rgb(97, 218, 251);
-}
-footer{
-  padding-top: 2em;
-}
+.color-react{color: rgb(97, 218, 251);}
 .logo-size{
   height: calc(2rem + 1.5vw);
   margin: 0px 5px 5px 5px;
 }
-.board {
-	max-width: 25em;
-	margin: auto;
-}
+.board {max-width: 25em;}
 .cell > img{
   width: 80%;
   /* for filters:
@@ -40,23 +31,34 @@ footer{
 
 /* Animations */
 
-.cell > .zoomIn {
-  animation-name: zoomIn;
-  animation-duration: 0.25s;
-  animation-fill-mode: both;
-}
-@keyframes zoomIn {
+@keyframes ZoomIn {
   0% {width: 0%;}
   50% {width: 100%;}
   100% {width: 80%;}
 }
-.cell > .zoomOut {
-  animation-name: zoomOut;
-  animation-duration: 0.25s;
-  animation-fill-mode: both;
-}
-@keyframes zoomOut {
+@keyframes ZoomOut {
   0% {width: 80%;}
   50% {width: 100%;}
   100% {width: 0%;}
 }
+.cell > .zoom-in {
+  animation-name: ZoomIn;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+}
+.cell > .zoom-out {
+  animation-name: ZoomOut;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+}
+
+.btn-anim > svg{
+  transition-property: scale, transform;
+  transition-duration: 0.25s, 0.5s;
+}
+.btn-anim:active > svg{scale: 0.5;}
+.btn-anim.btn-anim-ml:hover > svg{transform: translateX(-10px);}
+.btn-anim.btn-anim-mr:hover > svg{transform: translateX(10px);}
+.btn-anim.btn-anim-sx:hover > svg{transform: scale(1.5,1);}
+.btn-anim.btn-anim-sy:hover > svg{transform: scale(1,1.5);}
+.btn-anim.btn-anim-rot:hover > svg{transform: rotate(180deg);}
