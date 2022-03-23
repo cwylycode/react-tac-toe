@@ -31,7 +31,7 @@ export default function Board({ boardValues, setBoardValues, gridSize, onGameOve
       }
     }
     // All cells filled with no winner
-    if (boardValues.every(function (e) { return e !== null })) setStatus("draw")
+    if (boardValues.every((e) => e !== null)) setStatus("draw")
   }, [grid])
 
   function updateGrid() {

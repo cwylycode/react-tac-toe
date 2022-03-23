@@ -3,13 +3,13 @@ import { AiOutlineArrowLeft } from "react-icons/ai"
 import { AiOutlineArrowRight } from "react-icons/ai"
 import { useEffect, useState } from "react"
 
-export default function History({ currentPoint, historyLength, onClickBackward, onClickForward }) {
+export default function History({ currentPoint, historyBuffer, historyLength, onClickBackward, onClickForward }) {
 
   const [showBackBtn, setShowBackBtn] = useState(false)
   const [showNextBtn, setShowNextBtn] = useState(false)
 
   useEffect(() => {
-    if (historyLength === 1) {
+    if (historyLength === 1 + historyBuffer) {
       // No history
       setShowBackBtn(false)
       setShowNextBtn(false)
@@ -21,13 +21,13 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
       setShowNextBtn(false)
       return
     }
-    if (currentPoint > 0) {
+    if (currentPoint > 0 + historyBuffer) {
       // History in-between
       setShowBackBtn(true)
       setShowNextBtn(true)
       return
     }
-    if (currentPoint === 0) {
+    if (currentPoint === 0 + historyBuffer) {
       // At history start (zero), can only go forward
       setShowBackBtn(false)
       setShowNextBtn(true)

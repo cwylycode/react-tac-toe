@@ -1,5 +1,5 @@
 import "./index.css"
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import { TOKENS } from "./lib/constants"
@@ -8,11 +8,12 @@ import Board from "./components/Board"
 import History from "./components/History"
 
 function App() {
-
   const [boardValues, setBoardValues] = useState([null])
   const [boardHistory, setBoardHistory] = useState([])
   const [historyPoint, setHistoryPoint] = useState(false)
   const [historyBtnClicked, setHistoryBtnClicked] = useState(false)
+  const [isPlayerStarting, setIsPlayerStarting] = useState(true)
+  const [gameFinished, setGameFinished] = useState(false)
   // Settings
   const [gridSize, setGridSize] = useState(3)
   const [playerToken, setPlayerToken] = useState(TOKENS.X)
@@ -21,14 +22,17 @@ function App() {
   const [cpuTokenColor, setCpuTokenColor] = useState(null)
 
   useEffect(() => {
-    if (boardValues.every(v => { return v === null }) && !historyBtnClicked) {
+    if (historyBtnClicked) {
+      setHistoryBtnClicked(false)
+      return
+    }
+    if (boardValues.every(v => { return v === null })) {
       // Delete board history since board is empty because of game reset
       clearHistory()
       setHistoryPoint(0)
-      return
-    }
-    if (historyBtnClicked) {
-      setHistoryBtnClicked(false)
+      if (gameFinished) setIsPlayerStarting(prev => !prev)
+      else setIsPlayerStarting(true)
+      setGameFinished(false)
       return
     }
     const newHistory = [...boardHistory.slice(0, historyPoint + 1), boardValues]
@@ -43,11 +47,12 @@ function App() {
 
   function onGameOver(result) {
     clearHistory()
+    setGameFinished(true)
     alert(`game over: ${result}`)
   }
 
   function onHistoryClick(forward = false) {
-    setHistoryPoint(prev => forward ? prev + 1 : prev - 1)
+    setHistoryPoint(prev => forward ? prev + 2 : prev - 2)
     setHistoryBtnClicked(true)
   }
 
@@ -70,6 +75,7 @@ function App() {
         <History
           currentPoint={historyPoint}
           historyLength={boardHistory.length}
+          historyBuffer={isPlayerStarting ? 0 : 1}
           onClickBackward={() => { onHistoryClick(false) }}
           onClickForward={() => { onHistoryClick(true) }}
         />
