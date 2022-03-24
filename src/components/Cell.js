@@ -4,7 +4,7 @@ import { TOKENS } from "../lib/constants.js"
 
 import { useEffect, useState } from "react"
 
-export default function Cell({ cellID, cellValue, borders, handleClick }) {
+export default function Cell({ cellID, cellValue, borders, onCellClick }) {
 
   const [icon, setIcon] = useState("")
   const [animation, setAnimation] = useState("")
@@ -23,7 +23,7 @@ export default function Cell({ cellID, cellValue, borders, handleClick }) {
   }, [cellValue])
 
   return (
-    <button id={cellID} type="button" onClick={() => (handleClick(cellID))} className={`cell col btn position-relative rounded-0 border-dark border-5 ${borders}`}>
+    <button id={cellID} type="button" onClick={() => (onCellClick(cellID))} className={`cell col btn position-relative rounded-0 border-dark border-5 ${borders}`}>
       <img className={`cell-icon position-absolute translate-middle ${animation}`} src={icon}></img>
     </button>
   )

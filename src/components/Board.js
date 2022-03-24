@@ -3,36 +3,14 @@ import Cell from "./Cell"
 
 import { useEffect, useState } from "react"
 
-export default function Board({ boardValues, setBoardValues, gridSize, onGameOver, playerToken, cpuToken, aiDifficulty }) {
+export default function Board({ board, gridSize, onGameOver, onCellClick }) {
 
   const [grid, setGrid] = useState([])
-  const [winningLines, setWinningLines] = useState([])
-  const [playersTurn, setPlayersTurn] = useState(true)
-  const [status, setStatus] = useState(null)
 
   useEffect(() => {
-    reset(true) // Manually reset board if game-breaking settings change
-  }, [gridSize, playerToken])
-
-  useEffect(() => {
-    if (boardValues) updateGrid() // Prevent rendering the grid twice on startup
-    if (status) onGameOver(status)
-  }, [boardValues, status]) // Status needed for cell-click reset to work
-
-  useEffect(() => {
-    if (!boardValues) return
-    const arr = Array(gridSize)
-    for (let line of winningLines) {
-      for (let i = 0; i < gridSize; i++) arr[i] = boardValues[line[i]]
-      // Winner declared, return token
-      if (arr.every(function (e) { return e === arr[0] })) {
-        setStatus(arr[0])
-        return
-      }
-    }
-    // All cells filled with no winner
-    if (boardValues.every((e) => e !== null)) setStatus("draw")
-  }, [grid])
+    updateGrid()
+    checkBoardStatus()
+  }, [board])
 
   function updateGrid() {
     setGrid(() => {
@@ -47,7 +25,14 @@ export default function Board({ boardValues, setBoardValues, gridSize, onGameOve
           }
           else if (x === gridSize - 1) borders = "border-top-0 border-end-0 border-start-0"
           else borders = "border-top-0 border-start-0"
-          arr.push(<Cell key={i} cellID={i} cellValue={boardValues[i]} borders={borders} handleClick={handleCellClick} />)
+          arr.push(
+            <Cell
+              key={i}
+              cellID={i}
+              cellValue={board[i]}
+              borders={borders}
+              onCellClick={onCellClick}
+            />)
           i++
         }
       }
@@ -55,26 +40,30 @@ export default function Board({ boardValues, setBoardValues, gridSize, onGameOve
     })
   }
 
-  // Reset board - user override means user goes first, even if not their turn
-  function reset(userOverride = false) {
-    setBoardValues(Array(gridSize * gridSize).fill(null))
-    setWinningLines(LINES[gridSize - 3])
-    setStatus(null)
-    setPlayersTurn(userOverride ? true : playersTurn)
+  function checkBoardStatus() {
+    const winningLines = LINES[gridSize - 3]
+    for (let line of winningLines) {
+      const arr = Array(gridSize)
+      for (let i = 0; i < gridSize; i++) {
+        arr[i] = board[line[i]]
+      }
+      // Winner declared, return token
+      if (arr[0] && arr.every((e) => e === arr[0])) {
+        gameOver(arr[0], line)
+        return
+      }
+    }
+    // All cells filled with no winner - draw
+    if (board.every((e) => e !== null)) {
+      gameOver(null)
+    }
   }
 
-  // Both the player and computer will call this to place their tokens on the board
-  function handleCellClick(cellID) {
-    if (status) {
-      reset()
-      return
+  function gameOver(winningToken, winningLine = null) {
+    if (winningLine) {
+      // correct cells blinking
     }
-    if (boardValues[cellID]) return
-    const currentToken = playersTurn ? playerToken : cpuToken
-    setBoardValues(prev => prev.map((val, idx) => {
-      return idx === cellID ? currentToken : val
-    }))
-    setPlayersTurn(!playersTurn)
+    onGameOver(winningToken)
   }
 
   return (

@@ -1,5 +1,5 @@
 import "./index.css"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import { TOKENS } from "./lib/constants"
@@ -8,56 +8,73 @@ import Board from "./components/Board"
 import History from "./components/History"
 
 function App() {
-  const [boardValues, setBoardValues] = useState([null])
-  const [boardHistory, setBoardHistory] = useState([])
-  const [historyPoint, setHistoryPoint] = useState(false)
-  const [historyBtnClicked, setHistoryBtnClicked] = useState(false)
-  const [isPlayerStarting, setIsPlayerStarting] = useState(true)
-  const [gameFinished, setGameFinished] = useState(false)
-  // Settings
+  const isGameOver = useRef(false)
+  const [gameOverMessage, setGameOverMessage] = useState("?") // temp
   const [gridSize, setGridSize] = useState(3)
+  const [board, setBoard] = useState(initBoard())
+  const [boardHistory, setBoardHistory] = useState([initBoard()])
+  const historyPoint = useRef(0)
+  const [playersTurn, setPlayersTurn] = useState(true)
+  const playerFirst = useRef(true)
   const [playerToken, setPlayerToken] = useState(TOKENS.X)
   const [cpuToken, setCpuToken] = useState(TOKENS.O)
   const [playerTokenColor, setPlayerTokenColor] = useState(null)
   const [cpuTokenColor, setCpuTokenColor] = useState(null)
 
   useEffect(() => {
-    if (historyBtnClicked) {
-      setHistoryBtnClicked(false)
-      return
-    }
-    if (boardValues.every(v => { return v === null })) {
-      // Delete board history since board is empty because of game reset
-      clearHistory()
-      setHistoryPoint(0)
-      if (gameFinished) setIsPlayerStarting(prev => !prev)
-      else setIsPlayerStarting(true)
-      setGameFinished(false)
-      return
-    }
-    const newHistory = [...boardHistory.slice(0, historyPoint + 1), boardValues]
-    setBoardHistory(newHistory)
-    setHistoryPoint(newHistory.length - 1)
-  }, [boardValues])
+    resetGame(true)
+  }, [gridSize, playerToken])
 
   useEffect(() => {
-    if (!historyBtnClicked) return
-    setBoardValues(boardHistory[historyPoint])
-  }, [historyPoint])
+    if (!playersTurn) {
+      // AI
+    }
+  }, [playersTurn])
+
+  function initBoard() {
+    return Array(gridSize * gridSize).fill(null)
+  }
+
+  function resetGame(userOverride = false) {
+    setGameOverMessage("?") // temp
+    isGameOver.current = false
+    historyPoint.current = 0
+    setPlayersTurn(userOverride ? true : playerFirst.current)
+    setBoardHistory([initBoard()])
+    setBoard(initBoard())
+  }
 
   function onGameOver(result) {
-    clearHistory()
-    setGameFinished(true)
-    alert(`game over: ${result}`)
+    isGameOver.current = true
+    playerFirst.current = !playerFirst.current
+    setBoardHistory([initBoard()])
+    setGameOverMessage(result ? `Winner: ${result}` : "Draw")
   }
 
   function onHistoryClick(forward = false) {
-    setHistoryPoint(prev => forward ? prev + 2 : prev - 2)
-    setHistoryBtnClicked(true)
+    const direction = forward ? 1 : -1
+    historyPoint.current += direction
+    setPlayersTurn(!playersTurn) //remove for player/cpu
+    setBoard(boardHistory[historyPoint.current])
   }
 
-  function clearHistory() {
-    setBoardHistory([Array(gridSize * gridSize).fill(null)])
+  // Used by both player and cpu to place their tokens on the board
+  function onCellClick(cellID) {
+    if (isGameOver.current) {
+      resetGame()
+      return
+    }
+    if (board[cellID]) return
+
+    const currentToken = playersTurn ? playerToken : cpuToken
+    const newBoard = board.map((val, idx) => {
+      return idx === cellID ? currentToken : val
+    })
+    const newHistory = [...boardHistory.slice(0, historyPoint.current + 1), newBoard]
+    historyPoint.current = newHistory.length - 1
+    setBoard(newBoard)
+    setBoardHistory(newHistory)
+    setPlayersTurn(!playersTurn)
   }
 
   return (
@@ -65,20 +82,18 @@ function App() {
       <Header />
       <main className="pt-5">
         <Board
-          boardValues={boardValues}
-          setBoardValues={setBoardValues}
+          board={board}
           gridSize={gridSize}
           onGameOver={onGameOver}
-          playerToken={playerToken}
-          cpuToken={cpuToken}
+          onCellClick={onCellClick}
         />
         <History
-          currentPoint={historyPoint}
+          currentPoint={historyPoint.current}
           historyLength={boardHistory.length}
-          historyBuffer={isPlayerStarting ? 0 : 1}
           onClickBackward={() => { onHistoryClick(false) }}
           onClickForward={() => { onHistoryClick(true) }}
         />
+        <p>{gameOverMessage}</p>
       </main>
     </div>
   )
