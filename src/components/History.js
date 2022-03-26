@@ -9,7 +9,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
   const [showNextBtn, setShowNextBtn] = useState(false)
 
   useEffect(() => {
-    if (historyLength === 1) {
+    if (historyLength <= 2) {
       // No history
       setShowBackBtn(false)
       setShowNextBtn(false)
@@ -21,15 +21,15 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
       setShowNextBtn(false)
       return
     }
-    if (currentPoint > 0) {
-      // History in-between
-      setShowBackBtn(true)
+    if (currentPoint < 2) {
+      // At history start, can only go forward
+      setShowBackBtn(false)
       setShowNextBtn(true)
       return
     }
-    if (currentPoint === 0) {
-      // At history start, can only go forward
-      setShowBackBtn(false)
+    if (currentPoint > 0) {
+      // History in-between
+      setShowBackBtn(true)
       setShowNextBtn(true)
       return
     }
@@ -40,7 +40,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
       <button
         className={`${showBackBtn ? "" : "invisible"} btn btn-anim btn-anim-ml p-1 me-5 fs-2`}
         type="button"
-        title="Previous"
+        // title="Previous"
         onClick={onClickBackward}
       ><AiOutlineArrowLeft />
       </button>
@@ -48,7 +48,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
       <button
         className={`${showNextBtn ? "" : "invisible"} btn btn-anim btn-anim-mr p-1 ms-5 fs-2`}
         type="button"
-        title="Next"
+        // title="Next"
         onClick={onClickForward}
       ><AiOutlineArrowRight />
       </button>

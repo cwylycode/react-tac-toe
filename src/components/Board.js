@@ -1,16 +1,14 @@
-import { LINES } from "../lib/constants.js"
 import Cell from "./Cell"
 
 import { useEffect, useState } from "react"
 
-export default function Board({ board, gridSize, onGameOver, onCellClick }) {
+export default function Board({ board, gridSize, gameOverStatus, onCellClick }) {
 
   const [grid, setGrid] = useState([])
 
   useEffect(() => {
     updateGrid()
-    checkBoardStatus()
-  }, [board])
+  }, [board, gameOverStatus])
 
   function updateGrid() {
     setGrid(() => {
@@ -31,6 +29,7 @@ export default function Board({ board, gridSize, onGameOver, onCellClick }) {
               cellID={i}
               cellValue={board[i]}
               borders={borders}
+              gameStatus={gameOverStatus}
               onCellClick={onCellClick}
             />)
           i++
@@ -38,32 +37,6 @@ export default function Board({ board, gridSize, onGameOver, onCellClick }) {
       }
       return arr
     })
-  }
-
-  function checkBoardStatus() {
-    const winningLines = LINES[gridSize - 3]
-    for (let line of winningLines) {
-      const arr = Array(gridSize)
-      for (let i = 0; i < gridSize; i++) {
-        arr[i] = board[line[i]]
-      }
-      // Winner declared, return token
-      if (arr[0] && arr.every((e) => e === arr[0])) {
-        gameOver(arr[0], line)
-        return
-      }
-    }
-    // All cells filled with no winner - draw
-    if (board.every((e) => e !== null)) {
-      gameOver(null)
-    }
-  }
-
-  function gameOver(winningToken, winningLine = null) {
-    if (winningLine) {
-      // correct cells blinking
-    }
-    onGameOver(winningToken)
   }
 
   return (

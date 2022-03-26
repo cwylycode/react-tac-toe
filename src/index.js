@@ -2,15 +2,18 @@ import "./index.css"
 import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
-import { TOKENS } from "./lib/constants"
+import * as AI from "./lib/ai"
+import { AILEVEL, GRIDSIZE, TOKENS } from "./lib/constants"
 import Header from './components/Header'
 import Board from "./components/Board"
 import History from "./components/History"
 
 function App() {
   const isGameOver = useRef(false)
+  const [gameOverStatus, setGameOverStatus] = useState("")
   const [gameOverMessage, setGameOverMessage] = useState("?") // temp
-  const [gridSize, setGridSize] = useState(3)
+  const [gridSize, setGridSize] = useState(GRIDSIZE["3x3"])
+  const [aiDifficulty, setAIDifficulty] = useState(AILEVEL.Dummy)
   const [board, setBoard] = useState(initBoard())
   const [boardHistory, setBoardHistory] = useState([initBoard()])
   const historyPoint = useRef(0)
@@ -23,13 +26,23 @@ function App() {
 
   useEffect(() => {
     resetGame(true)
-  }, [gridSize, playerToken])
+    AI.updateSettings(playerToken, cpuToken, gridSize, aiDifficulty)
+  }, [gridSize, playerToken, aiDifficulty])
 
   useEffect(() => {
-    if (!playersTurn) {
-      // AI
+    const status = AI.getBoardStatus(board)
+    if (status) {
+      onGameOver(status)
+      return
     }
-  }, [playersTurn])
+    if (!playersTurn && !isGameOver.current) {
+      const delay = setTimeout(() => {
+        const moveID = AI.getAIMove(board)
+        placeToken(moveID)
+      }, 250)
+      return () => clearTimeout(delay)
+    }
+  }, [board])
 
   function initBoard() {
     return Array(gridSize * gridSize).fill(null)
@@ -48,33 +61,38 @@ function App() {
     isGameOver.current = true
     playerFirst.current = !playerFirst.current
     setBoardHistory([initBoard()])
-    setGameOverMessage(result ? `Winner: ${result}` : "Draw")
+    setGameOverStatus(result)
+    setGameOverMessage(result.token ? `Winner: ${result.token}` : "Draw") //temp
   }
 
   function onHistoryClick(forward = false) {
-    const direction = forward ? 1 : -1
+    if (!playersTurn) return
+    const direction = forward ? 2 : -2
     historyPoint.current += direction
-    setPlayersTurn(!playersTurn) //remove for player/cpu
     setBoard(boardHistory[historyPoint.current])
   }
 
-  // Used by both player and cpu to place their tokens on the board
+  // Player clicked on board cell
   function onCellClick(cellID) {
     if (isGameOver.current) {
       resetGame()
       return
     }
-    if (board[cellID]) return
+    if (board[cellID] || !playersTurn) return
+    placeToken(cellID)
+  }
 
+  // Used by both player and cpu to place their tokens on the board
+  function placeToken(cellID) {
     const currentToken = playersTurn ? playerToken : cpuToken
     const newBoard = board.map((val, idx) => {
       return idx === cellID ? currentToken : val
     })
     const newHistory = [...boardHistory.slice(0, historyPoint.current + 1), newBoard]
     historyPoint.current = newHistory.length - 1
-    setBoard(newBoard)
-    setBoardHistory(newHistory)
     setPlayersTurn(!playersTurn)
+    setBoardHistory(newHistory)
+    setBoard(newBoard)
   }
 
   return (
@@ -84,7 +102,7 @@ function App() {
         <Board
           board={board}
           gridSize={gridSize}
-          onGameOver={onGameOver}
+          onGameOver={gameOverStatus}
           onCellClick={onCellClick}
         />
         <History

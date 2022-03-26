@@ -4,18 +4,30 @@ export const TOKENS = {
 }
 
 export const COLORS = {
-  none: "",
-  red: "rgb(255,0,0)",
-  yellow: "rgb(255,255,0)",
-  green: "rgb(0,255,0)",
-  cyan: "rgb(0,255,255)",
-  blue: "rgb(0,0,255)",
-  magenta: "rgb(255,0,255)",
+  None: "",
+  Red: "rgb(255,0,0)",
+  Yellow: "rgb(255,255,0)",
+  Green: "rgb(0,255,0)",
+  Cyan: "rgb(0,255,255)",
+  Blue: "rgb(0,0,255)",
+  Magenta: "rgb(255,0,255)",
 }
 
-export const LINES = [
+export const AILEVEL = {
+  Dummy: 0,
+  Smart: 1,
+  Genius: 2
+}
+
+export const GRIDSIZE = {
+  "3x3": 3,
+  "4x4": 4,
+  "5x5": 5,
+}
+
+export const LINES = {
   // 3x3
-  [
+  3: [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -26,7 +38,7 @@ export const LINES = [
     [2, 4, 6],
   ],
   // 4x4
-  [
+  4: [
     [0, 1, 2, 3],
     [4, 5, 6, 7],
     [8, 9, 10, 11],
@@ -39,7 +51,7 @@ export const LINES = [
     [3, 6, 9, 12],
   ],
   // 5x5
-  [
+  5: [
     [0, 1, 2, 3, 4],
     [5, 6, 7, 8, 9],
     [10, 11, 12, 13, 14],
@@ -53,4 +65,4 @@ export const LINES = [
     [0, 6, 12, 18, 24],
     [4, 8, 12, 16, 20],
   ]
-]
+}
