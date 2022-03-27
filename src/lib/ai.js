@@ -10,7 +10,7 @@ export function updateSettings(playerTkn, cpuTkn, gridsize, aiLevel) {
   playerToken = playerTkn
   cpuToken = cpuTkn
   const factor = {
-    0: 0,
+    0: 0.5,
     1: 0.8,
     2: 1
   }

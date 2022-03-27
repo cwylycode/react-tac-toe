@@ -4,39 +4,44 @@ import ReactDOM from 'react-dom'
 
 import * as AI from "./lib/ai"
 import { AILEVEL, GRIDSIZE, TOKENS } from "./lib/constants"
+
 import Header from './components/Header'
 import Board from "./components/Board"
 import History from "./components/History"
 
 function App() {
-  const isGameOver = useRef(false)
-  const [gameOverStatus, setGameOverStatus] = useState("")
-  const [gameOverMessage, setGameOverMessage] = useState("?") // temp
+  // Settings
   const [gridSize, setGridSize] = useState(GRIDSIZE["3x3"])
   const [aiDifficulty, setAIDifficulty] = useState(AILEVEL.Dummy)
-  const [board, setBoard] = useState(initBoard())
-  const [boardHistory, setBoardHistory] = useState([initBoard()])
-  const historyPoint = useRef(0)
-  const [playersTurn, setPlayersTurn] = useState(true)
-  const playerFirst = useRef(true)
   const [playerToken, setPlayerToken] = useState(TOKENS.X)
   const [cpuToken, setCpuToken] = useState(TOKENS.O)
   const [playerTokenColor, setPlayerTokenColor] = useState(null)
   const [cpuTokenColor, setCpuTokenColor] = useState(null)
+  // Game states
+  const isGameOver = useRef(false)
+  const [gameOverStatus, setGameOverStatus] = useState("")
+  const [gameOverMessage, setGameOverMessage] = useState("?") // temp
+  const [board, setBoard] = useState(initBoard())
+  const [boardHistory, setBoardHistory] = useState([initBoard()])
+  const historyPoint = useRef(0)
+  const playerFirst = useRef(true)
+  const [playersTurn, setPlayersTurn] = useState(true)
 
   useEffect(() => {
+    // Settings have been changed
     resetGame(true)
     AI.updateSettings(playerToken, cpuToken, gridSize, aiDifficulty)
-  }, [gridSize, playerToken, aiDifficulty])
+  }, [gridSize, playerToken, aiDifficulty, playerTokenColor, cpuTokenColor])
 
   useEffect(() => {
     const status = AI.getBoardStatus(board)
     if (status) {
+      // Status, if not a draw, will contain the winning token and the cell values it won on
       onGameOver(status)
       return
     }
     if (!playersTurn && !isGameOver.current) {
-      const delay = setTimeout(() => {
+      const delay = setTimeout(() => { // Timeout allows for the player token to be rendered first
         const moveID = AI.getAIMove(board)
         placeToken(moveID)
       }, 250)
@@ -52,6 +57,7 @@ function App() {
     setGameOverMessage("?") // temp
     isGameOver.current = false
     historyPoint.current = 0
+    // User override makes sure player goes first if setting changes reset the game
     setPlayersTurn(userOverride ? true : playerFirst.current)
     setBoardHistory([initBoard()])
     setBoard(initBoard())

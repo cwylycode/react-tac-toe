@@ -38,7 +38,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
   return (
     <div className="d-flex justify-content-center pt-3">
       <button
-        className={`${showBackBtn ? "" : "invisible"} btn btn-anim btn-anim-ml p-1 me-5 fs-2`}
+        className={`${showBackBtn ? "" : "invisible"} btn btn-anim btn-anim-ml p-1 me-5 fs-1`}
         type="button"
         // title="Previous"
         onClick={onClickBackward}
@@ -46,7 +46,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
       </button>
       <div className="p-1 fs-1" title="History"><MdHistory /></div>
       <button
-        className={`${showNextBtn ? "" : "invisible"} btn btn-anim btn-anim-mr p-1 ms-5 fs-2`}
+        className={`${showNextBtn ? "" : "invisible"} btn btn-anim btn-anim-mr p-1 ms-5 fs-1`}
         type="button"
         // title="Next"
         onClick={onClickForward}

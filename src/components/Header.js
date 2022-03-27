@@ -13,9 +13,9 @@ export default function Header() {
         <img id='ttt-logo' className='logo-size d-none d-sm-block' src={tl} alt='tic tac toe logo thingy'></img>
       </div>
       <div className="position-absolute top-0 end-0 pe-3 pt-2">
-        <button title="Info" type="button" className="btn btn-anim btn-anim-sx p-1 fs-2"><BsInfoCircle /></button>
-        <button title="Stats" type="button" className="btn btn-anim btn-anim-sy p-1 fs-2"><BsBarChart /></button>
-        <button title="Settings" type="button" className="btn btn-anim btn-anim-rot p-1 fs-2"><BsGear /></button>
+        <button title="Info" type="button" className="btn btn-anim btn-anim-sx p-1 fs-1"><BsInfoCircle /></button>
+        <button title="Stats" type="button" className="btn btn-anim btn-anim-sy p-1 fs-1"><BsBarChart /></button>
+        <button title="Settings" type="button" className="btn btn-anim btn-anim-rot p-1 fs-1"><BsGear /></button>
       </div>
     </header>
   )
