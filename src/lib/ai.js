@@ -5,7 +5,7 @@ let gridSize = 0
 let playerToken = ""
 let cpuToken = ""
 
-export function updateSettings(playerTkn, cpuTkn, gridsize, aiLevel) {
+export function updateConfig(playerTkn, cpuTkn, gridsize, aiLevel) {
   gridSize = gridsize
   playerToken = playerTkn
   cpuToken = cpuTkn

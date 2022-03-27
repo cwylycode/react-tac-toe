@@ -44,7 +44,7 @@ export default function History({ currentPoint, historyLength, onClickBackward, 
         onClick={onClickBackward}
       ><AiOutlineArrowLeft />
       </button>
-      <div className="p-1 fs-1" title="History"><MdHistory /></div>
+      <div className={`${showBackBtn || showNextBtn ? "" : "invisible"} p-1 fs-1`} title="History"><MdHistory /></div>
       <button
         className={`${showNextBtn ? "" : "invisible"} btn btn-anim btn-anim-mr p-1 ms-5 fs-1`}
         type="button"

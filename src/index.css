@@ -31,23 +31,23 @@ body{
 
 /* Animations */
 
-@keyframes ZoomIn {
+@keyframes CellZoomIn {
   0% {width: 0%;}
   50% {width: 100%;}
   100% {width: 80%;}
 }
-@keyframes ZoomOut {
+@keyframes CellZoomOut {
   0% {width: 80%;}
   50% {width: 100%;}
   100% {width: 0%;}
 }
 .cell > .zoom-in {
-  animation-name: ZoomIn;
+  animation-name: CellZoomIn;
   animation-duration: 0.25s;
   animation-fill-mode: both;
 }
 .cell > .zoom-out {
-  animation-name: ZoomOut;
+  animation-name: CellZoomOut;
   animation-duration: 0.25s;
   animation-fill-mode: both;
 }

@@ -1,22 +1,41 @@
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.css"
 import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 import * as AI from "./lib/ai"
+import * as storage from "./lib/storage"
 import { AILEVEL, GRIDSIZE, TOKENS } from "./lib/constants"
 
 import Header from './components/Header'
 import Board from "./components/Board"
 import History from "./components/History"
+import ModalInfo from "./components/ModalInfo"
+import ModalStats from "./components/ModalStats"
+import ModalSettings from "./components/ModalSettings"
+
+const defaultSettings = {
+  gridSize: GRIDSIZE.three.value,
+  aiDifficulty: AILEVEL.easy.value,
+  playerToken: TOKENS.X,
+  cpuToken: TOKENS.O,
+  playerTokenColor: null,
+  cpuTokenColor: null
+}
+const defaultStats = {
+  wins: 0,
+  losses: 0,
+  draws: 0,
+  cheated: 0
+}
 
 function App() {
-  // Settings
-  const [gridSize, setGridSize] = useState(GRIDSIZE["3x3"])
-  const [aiDifficulty, setAIDifficulty] = useState(AILEVEL.Dummy)
-  const [playerToken, setPlayerToken] = useState(TOKENS.X)
-  const [cpuToken, setCpuToken] = useState(TOKENS.O)
-  const [playerTokenColor, setPlayerTokenColor] = useState(null)
-  const [cpuTokenColor, setCpuTokenColor] = useState(null)
+
+  // Storage
+  const [settings, setSettings] = useState(defaultSettings)
+  const [stats, setStats] = useState(defaultStats)
+
   // Game states
   const isGameOver = useRef(false)
   const [gameOverStatus, setGameOverStatus] = useState("")
@@ -30,8 +49,13 @@ function App() {
   useEffect(() => {
     // Settings have been changed
     resetGame(true)
-    AI.updateSettings(playerToken, cpuToken, gridSize, aiDifficulty)
-  }, [gridSize, playerToken, aiDifficulty, playerTokenColor, cpuTokenColor])
+    AI.updateConfig(
+      settings.playerToken,
+      settings.cpuToken,
+      settings.gridSize,
+      settings.aiDifficulty
+    )
+  }, [settings])
 
   useEffect(() => {
     const status = AI.getBoardStatus(board)
@@ -49,8 +73,12 @@ function App() {
     }
   }, [board])
 
-  function initBoard() {
-    return Array(gridSize * gridSize).fill(null)
+  function resetSettings() {
+
+  }
+
+  function resetStats() {
+
   }
 
   function resetGame(userOverride = false) {
@@ -90,7 +118,7 @@ function App() {
 
   // Used by both player and cpu to place their tokens on the board
   function placeToken(cellID) {
-    const currentToken = playersTurn ? playerToken : cpuToken
+    const currentToken = playersTurn ? settings.playerToken : settings.cpuToken
     const newBoard = board.map((val, idx) => {
       return idx === cellID ? currentToken : val
     })
@@ -101,13 +129,17 @@ function App() {
     setBoard(newBoard)
   }
 
+  function initBoard() {
+    return Array(settings.gridSize * settings.gridSize).fill(null)
+  }
+
   return (
     <div className='container-xxl'>
       <Header />
-      <main className="pt-5">
+      <main className="pt-4">
         <Board
           board={board}
-          gridSize={gridSize}
+          gridSize={settings.gridSize}
           onGameOver={gameOverStatus}
           onCellClick={onCellClick}
         />
@@ -119,6 +151,9 @@ function App() {
         />
         <p>{gameOverMessage}</p>
       </main>
+      <ModalInfo />
+      <ModalStats onResetClick={resetStats} />
+      <ModalSettings onResetClick={resetSettings} />
     </div>
   )
 }

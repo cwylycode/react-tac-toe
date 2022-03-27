@@ -1,4 +1,4 @@
-export default function getData(key) {
+export function getData(key) {
   if (!localStorage) return;
 
   try {
@@ -8,7 +8,7 @@ export default function getData(key) {
   }
 };
 
-export default function setData(key, item) {
+export function setData(key, item) {
   if (!localStorage) return;
 
   try {
