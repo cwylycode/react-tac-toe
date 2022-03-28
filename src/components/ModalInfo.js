@@ -1,7 +1,7 @@
 import ModalBase from "./ModalBase";
 
 export default function ModalInfo() {
-  const contextButtons = <><a href="https://github.com/cwylycode/react-tac-toe" target={"_blank"} className="btn btn-success">See on GitHub</a></>
+  const contextButtons = <><a href="https://github.com/cwylycode/react-tac-toe" target={"_blank"} className="btn btn-bs btn-success">See on GitHub</a></>
   return (
     <ModalBase id={"info-modal"} title={"Info"} contextButtons={contextButtons}>
       <div className="text-center">

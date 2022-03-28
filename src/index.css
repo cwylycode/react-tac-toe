@@ -11,23 +11,49 @@
   box-shadow: none;
 }
 
+.color-react{color: rgb(97, 218, 251);}
+
 body{
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.color-react{color: rgb(97, 218, 251);}
+
+body.dark{background-color: black;}
+
+.dark *:not(.btn-bs,a,#ttt-logo,.cell-icon,.btn-close){
+  background-color: black;
+  color: white;
+  border-color: white !important;
+}
+
+.dark #ttt-logo, .dark .cell-icon, .dark .btn-close{filter: invert();}
+
+.dark .modal, .dark .modal .modal-dialog{background-color: transparent !important;}
+
 .logo-size{
   height: calc(2rem + 1.5vw);
   margin: 0px 5px 5px 5px;
 }
-.board {max-width: 25em;}
-.cell > img{
+
+.cell-icon{
   width: 80%;
   /* for filters:
   https://codepen.io/sosuke/pen/Pjoqqp */
 }
+
+.toggle{
+  width: 4em !important;
+  height: 2em !important;
+}
+.toggle:checked{
+  background-color: black;
+  border-color: white;
+  filter: invert(100%);
+}
+
+.board {max-width: 25em;}
 
 /* Animations */
 

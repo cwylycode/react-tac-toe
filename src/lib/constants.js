@@ -4,19 +4,51 @@ export const TOKENS = {
 }
 
 export const COLORS = {
-  None: { name: "None", value: "" },
-  Red: { name: "Red", value: "rgb(255,0,0)" },
-  Yellow: { name: "Yellow", value: "rgb(255,255,0)" },
-  Green: { name: "Green", value: "rgb(0,255,0)" },
-  Cyan: { name: "Cyan", value: "rgb(0,255,255)" },
-  Blue: { name: "Blue", value: "rgb(0,0,255)" },
-  Magenta: { name: "Magenta", value: "rgb(255,0,255)" },
+  // To be used with css filters for the tokens
+  // https://codepen.io/sosuke/pen/Pjoqqp
+  None: {
+    name: "None",
+    value: ""
+  },
+  Red: {
+    name: "Red",
+    value: "invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%)"
+  },
+  Yellow: {
+    name: "Yellow",
+    value: "invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%)"
+  },
+  Green: {
+    name: "Green",
+    value: "invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%)"
+  },
+  Cyan: {
+    name: "Cyan",
+    value: "invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%)"
+  },
+  Blue: {
+    name: "Blue",
+    value: "invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%)"
+  },
+  Magenta: {
+    name: "Magenta",
+    value: "invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%)"
+  },
 }
 
 export const AILEVEL = {
-  easy: { name: "Dummy", value: 0, },
-  normal: { name: "Smart", value: 1, },
-  hard: { name: "Genius", value: 2 }
+  easy: {
+    name: "Dummy",
+    value: 0,
+  },
+  normal: {
+    name: "Smart",
+    value: 1,
+  },
+  hard: {
+    name: "Genius",
+    value: 2
+  }
 }
 
 export const GRIDSIZE = {

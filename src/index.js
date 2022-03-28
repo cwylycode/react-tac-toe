@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 
 import * as AI from "./lib/ai"
 import * as storage from "./lib/storage"
-import { AILEVEL, GRIDSIZE, TOKENS } from "./lib/constants"
+import { AILEVEL, COLORS, GRIDSIZE, TOKENS } from "./lib/constants"
 
 import Header from './components/Header'
 import Board from "./components/Board"
@@ -16,12 +16,13 @@ import ModalStats from "./components/ModalStats"
 import ModalSettings from "./components/ModalSettings"
 
 const defaultSettings = {
-  gridSize: GRIDSIZE.three.value,
+  darkModeActive: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
   aiDifficulty: AILEVEL.easy.value,
+  gridSize: GRIDSIZE.three.value,
   playerToken: TOKENS.X,
-  cpuToken: TOKENS.O,
-  playerTokenColor: null,
-  cpuTokenColor: null
+  playerTokenColor: COLORS.None.value,
+  cpuTokenColor: COLORS.None.value,
+  cpuToken: TOKENS.O
 }
 const defaultStats = {
   wins: 0,
@@ -46,8 +47,12 @@ function App() {
   const playerFirst = useRef(true)
   const [playersTurn, setPlayersTurn] = useState(true)
 
+  // useEffect(()=>{
+  //   // Saving
+  // },[settings,stats])
+
   useEffect(() => {
-    // Settings have been changed
+    // Settings have been changed - reset game
     resetGame(true)
     AI.updateConfig(
       settings.playerToken,
@@ -72,14 +77,6 @@ function App() {
       return () => clearTimeout(delay)
     }
   }, [board])
-
-  function resetSettings() {
-
-  }
-
-  function resetStats() {
-
-  }
 
   function resetGame(userOverride = false) {
     setGameOverMessage("?") // temp
@@ -152,8 +149,8 @@ function App() {
         <p>{gameOverMessage}</p>
       </main>
       <ModalInfo />
-      <ModalStats onResetClick={resetStats} />
-      <ModalSettings onResetClick={resetSettings} />
+      <ModalStats onResetClick={() => { setStats(defaultStats) }} />
+      <ModalSettings onResetClick={() => { setSettings(defaultSettings) }} />
     </div>
   )
 }

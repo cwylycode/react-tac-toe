@@ -18,7 +18,7 @@ export default function Board({ board, gridSize, gameOverStatus, onCellClick }) 
         for (let x = 0; x < gridSize; x++) {
           let borders = ""
           if (y === gridSize - 1) {
-            if (x === gridSize - 1) borders = "border-top-0 border-end-0 border-bottom-0 border-start-0"
+            if (x === gridSize - 1) borders = "border-0"
             else borders = "border-top-0 border-bottom-0 border-start-0"
           }
           else if (x === gridSize - 1) borders = "border-top-0 border-end-0 border-start-0"
