@@ -1,6 +1,12 @@
 export const TOKENS = {
-  X: "x",
-  O: "o"
+  X: {
+    name: "X",
+    value: "x"
+  },
+  O: {
+    name: "O",
+    value: "o"
+  }
 }
 
 export const COLORS = {
@@ -12,33 +18,33 @@ export const COLORS = {
   },
   Red: {
     name: "Red",
-    value: "invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%)"
+    value: "invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 0.5em rgb(255,0,0))"
   },
   Yellow: {
     name: "Yellow",
-    value: "invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%)"
+    value: "invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 0.5em rgb(255,255,0))"
   },
   Green: {
     name: "Green",
-    value: "invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%)"
+    value: "invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 0.5em rgb(0,255,0))"
   },
   Cyan: {
     name: "Cyan",
-    value: "invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%)"
+    value: "invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 0.5em rgb(0,255,255))"
   },
   Blue: {
     name: "Blue",
-    value: "invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%)"
+    value: "invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 0.5em rgb(0,0,255))"
   },
   Magenta: {
     name: "Magenta",
-    value: "invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%)"
+    value: "invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 0.5em rgb(255,0,255))"
   },
 }
 
-export const AILEVEL = {
+export const AILEVELS = {
   easy: {
-    name: "Dummy",
+    name: "Dumb",
     value: 0,
   },
   normal: {
@@ -51,10 +57,19 @@ export const AILEVEL = {
   }
 }
 
-export const GRIDSIZE = {
-  three: { name: "3x3", value: 3, },
-  four: { name: "4x4", value: 4, },
-  five: { name: "5x5", value: 5, }
+export const GRIDSIZES = {
+  three: {
+    name: "3 x 3",
+    value: 3,
+  },
+  four: {
+    name: "4 x 4",
+    value: 4,
+  },
+  five: {
+    name: "5 x 5",
+    value: 5,
+  }
 }
 
 export const LINES = {

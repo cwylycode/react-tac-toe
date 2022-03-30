@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 
 import * as AI from "./lib/ai"
 import * as storage from "./lib/storage"
-import { AILEVEL, COLORS, GRIDSIZE, TOKENS } from "./lib/constants"
+import { AILEVELS, COLORS, GRIDSIZES, TOKENS } from "./lib/constants"
 
 import Header from './components/Header'
 import Board from "./components/Board"
@@ -17,12 +17,12 @@ import ModalSettings from "./components/ModalSettings"
 
 const defaultSettings = {
   darkModeActive: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
-  aiDifficulty: AILEVEL.easy.value,
-  gridSize: GRIDSIZE.three.value,
-  playerToken: TOKENS.X,
+  aiDifficulty: AILEVELS.easy.value,
+  gridSize: GRIDSIZES.three.value,
+  playerToken: TOKENS.X.value,
   playerTokenColor: COLORS.None.value,
   cpuTokenColor: COLORS.None.value,
-  cpuToken: TOKENS.O
+  cpuToken: TOKENS.O.value
 }
 const defaultStats = {
   wins: 0,
@@ -48,18 +48,23 @@ function App() {
   const [playersTurn, setPlayersTurn] = useState(true)
 
   // useEffect(()=>{
-  //   // Saving
+  //   // Saving and loading
   // },[settings,stats])
 
   useEffect(() => {
-    // Settings have been changed - reset game
+    // Settings have been changed - reset game and update stuff
     resetGame(true)
+    // CPU token is not really a setting, but still must be manually set when the player token gets changed
+    if (settings.playerToken === TOKENS.X.value) settings.cpuToken = TOKENS.O.value
+    else settings.cpuToken = TOKENS.X.value
     AI.updateConfig(
       settings.playerToken,
       settings.cpuToken,
       settings.gridSize,
       settings.aiDifficulty
     )
+    if (settings.darkModeActive) document.body.classList.add("dark")
+    else document.body.classList.remove("dark")
   }, [settings])
 
   useEffect(() => {
@@ -78,11 +83,16 @@ function App() {
     }
   }, [board])
 
+  function changeSetting(k, val) {
+    setSettings(prev => { return { ...prev, [k]: val } })
+  }
+
   function resetGame(userOverride = false) {
     setGameOverMessage("?") // temp
     isGameOver.current = false
     historyPoint.current = 0
-    // User override makes sure player goes first if setting changes reset the game
+    // User override makes sure player goes first if setting changes resets the game
+    if (userOverride) playerFirst.current = true
     setPlayersTurn(userOverride ? true : playerFirst.current)
     setBoardHistory([initBoard()])
     setBoard(initBoard())
@@ -146,11 +156,15 @@ function App() {
           onClickBackward={() => { onHistoryClick(false) }}
           onClickForward={() => { onHistoryClick(true) }}
         />
-        <p>{gameOverMessage}</p>
+        {/* <p>{gameOverMessage}</p> */}
       </main>
       <ModalInfo />
       <ModalStats onResetClick={() => { setStats(defaultStats) }} />
-      <ModalSettings onResetClick={() => { setSettings(defaultSettings) }} />
+      <ModalSettings
+        onResetClick={() => { setSettings(defaultSettings) }}
+        settings={settings}
+        changeSetting={changeSetting}
+      />
     </div>
   )
 }

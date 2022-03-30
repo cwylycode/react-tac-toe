@@ -12,8 +12,8 @@ export default function Cell({ cellID, cellValue, borders, onCellClick }) {
   useEffect(() => {
     if (cellValue) {
       setAnimation("zoom-in")
-      if (cellValue === TOKENS.X) setIcon(iconX)
-      else if (cellValue === TOKENS.O) setIcon(iconO)
+      if (cellValue === TOKENS.X.value) setIcon(iconX)
+      else if (cellValue === TOKENS.O.value) setIcon(iconO)
     }
     else {
       setAnimation("zoom-out")
