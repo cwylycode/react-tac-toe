@@ -7,7 +7,6 @@ export default function ModalInfo() {
       <div className="text-center">
         <h5>React-Tac-Toe</h5>
         <p>A Tic-Tac-Toe game made with React</p>
-        <br />
         <p>Pick your token and play against the computer and win (or lose...or draw). But most of all, have fun!</p>
         <br />
         <p>Made by <a href="https://cwylycode.github.io" target={"_blank"}>cwylycode</a></p>

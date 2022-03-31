@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ModalBase from "./ModalBase";
 import { AILEVELS, COLORS, GRIDSIZES, TOKENS } from "../lib/constants"
 import {
-  BsX,
-  BsCircle,
   BsMoonStars,
   BsSpeedometer,
   BsHash,
@@ -32,7 +30,7 @@ function UIBtnGrp({ id, state, setState, selections, isDarkMode }) {
     for (var x in selections) {
       els.push(<React.Fragment key={x}>
         <input id={id + x} type="radio" onChange={(e) => { setState(id, e.target.value) }} className="btn-check" name={selections[x].name} value={selections[x].value} autoComplete="off" checked={state == selections[x].value} />
-        <label className={`btn btn-bs btn-outline-${isDarkMode ? "light" : "secondary"}`} htmlFor={id + x}><BsCircle /></label>
+        <label className={`btn btn-bs btn-outline-${isDarkMode ? "light" : "secondary"}`} htmlFor={id + x}>{selections[x].name}</label>
       </React.Fragment>
       )
     }
