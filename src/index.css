@@ -11,25 +11,43 @@ body{
       -ms-user-select: none; /* Internet Explorer/Edge */
           user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
+body.dark, .dark [class*=modal], .dark select{background-color: black !important;}
+.dark *:not(a, .color-react, .btn-bs) {color: white; border-color: white !important;}
+.dark .modal, .dark .modal-dialog{background-color: transparent !important;}
+.dark #ttt-logo, .dark .cell-icon, .dark .cell-strike, .dark .btn-close{filter: invert();}
 
 .btn:focus{
   outline: none;
   box-shadow: none;
 }
 
-.color-react{color: rgb(97, 218, 251);}
+.color-react{color: rgb(97,218,251);}
 
-body.dark{background-color: black;}
+/* .color-red      { background-color: rgb(255,0,0) !important;  }
+.color-yellow   { background-color: rgb(255,255,0) !important;}
+.color-green    { background-color: rgb(0,255,0) !important;  }
+.color-cyan     { background-color: rgb(0,255,255) !important;}
+.color-blue     { background-color: rgb(0,0,255) !important;  }
+.color-magenta  { background-color: rgb(255,0,255) !important;} */
 
-.dark *:not(.color-react,.btn-bs,a,#ttt-logo,.cell-icon,.btn-close){
-  background-color: black;
-  color: white;
-  border-color: white !important;
+.filter-red{
+  filter: invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 0.5em rgb(255,0,0));
 }
-
-.dark #ttt-logo, .dark .cell-icon, .dark .btn-close{filter: invert();}
-
-.dark .modal, .dark .modal .modal-dialog{background-color: transparent !important;}
+.filter-yellow{
+  filter: invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 0.5em rgb(255,255,0));
+}
+.filter-green{
+  filter: invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 0.5em rgb(0,255,0));
+}
+.filter-cyan{
+  filter: invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 0.5em rgb(0,255,255));
+}
+.filter-blue{
+  filter: invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 0.5em rgb(0,0,255));
+}
+.filter-magenta{
+  filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 0.5em rgb(255,0,255));
+}
 
 .logo-size{
   height: calc(2rem + 1.5vw);
@@ -38,9 +56,18 @@ body.dark{background-color: black;}
 
 .cell-icon{
   width: 80%;
-  /* for filters:
-  https://codepen.io/sosuke/pen/Pjoqqp */
 }
+.cell-strike {
+  background-color: black;
+	min-width: 4%;
+	position: absolute;
+	height: 150%;
+	left: calc(50% - 2%);
+	top: calc(50% / -2);
+}
+.cell-strike-h {rotate: 90deg;}
+.cell-strike-dl {rotate: -45deg;}
+.cell-strike-dr {rotate: 45deg;}
 
 .toggle{
   width: 4em !important;

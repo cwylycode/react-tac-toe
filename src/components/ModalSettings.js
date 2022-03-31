@@ -24,13 +24,13 @@ function UIDropdown({ id, state, setState, selections }) {
   )
 }
 
-function UIBtnGrp({ id, state, setState, selections, isDarkMode }) {
+function UIBtnGrp({ id, state, setState, selections }) {
   const btnElements = function () {
     const els = []
     for (var x in selections) {
       els.push(<React.Fragment key={x}>
         <input id={id + x} type="radio" onChange={(e) => { setState(id, e.target.value) }} className="btn-check" name={selections[x].name} value={selections[x].value} autoComplete="off" checked={state == selections[x].value} />
-        <label className={`btn btn-bs btn-outline-${isDarkMode ? "light" : "secondary"}`} htmlFor={id + x}>{selections[x].name}</label>
+        <label className={"btn btn-outline-secondary"} htmlFor={id + x}>{selections[x].name}</label>
       </React.Fragment>
       )
     }
@@ -52,7 +52,7 @@ function UIToggle({ id, state, setState }) {
   )
 }
 
-function Setting({ children, description, icon, classes, tooltip }) {
+function Setting({ children, description, icon, classes }) {
   return (
     <div className={classes}>
       <div className="d-flex align-items-center">
@@ -96,8 +96,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
           id={"aiDifficulty"}
           state={settings.aiDifficulty}
           setState={changeSetting}
-          selections={AILEVELS}
-          isDarkMode={settings.darkModeActive}>
+          selections={AILEVELS}>
         </UIBtnGrp>
       </Setting>
 
@@ -109,8 +108,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
           id={"gridSize"}
           state={settings.gridSize}
           setState={changeSetting}
-          selections={GRIDSIZES}
-          isDarkMode={settings.darkModeActive}>
+          selections={GRIDSIZES}>
         </UIBtnGrp>
       </Setting>
 
@@ -122,8 +120,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
           id={"playerToken"}
           state={settings.playerToken}
           setState={changeSetting}
-          selections={TOKENS}
-          isDarkMode={settings.darkModeActive}>
+          selections={TOKENS}>
         </UIBtnGrp>
       </Setting>
 

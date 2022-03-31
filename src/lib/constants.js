@@ -10,7 +10,7 @@ export const TOKENS = {
 }
 
 export const COLORS = {
-  // To be used with css filters for the tokens
+  // CSS class definitions to be used for the tokens
   // https://codepen.io/sosuke/pen/Pjoqqp
   None: {
     name: "None",
@@ -18,27 +18,27 @@ export const COLORS = {
   },
   Red: {
     name: "Red",
-    value: "invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 0.5em rgb(255,0,0))"
+    value: "filter-red"
   },
   Yellow: {
     name: "Yellow",
-    value: "invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 0.5em rgb(255,255,0))"
+    value: "filter-yellow"
   },
   Green: {
     name: "Green",
-    value: "invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 0.5em rgb(0,255,0))"
+    value: "filter-green"
   },
   Cyan: {
     name: "Cyan",
-    value: "invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 0.5em rgb(0,255,255))"
+    value: "filter-cyan"
   },
   Blue: {
     name: "Blue",
-    value: "invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 0.5em rgb(0,0,255))"
+    value: "filter-blue"
   },
   Magenta: {
     name: "Magenta",
-    value: "invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 0.5em rgb(255,0,255))"
+    value: "filter-magenta"
   },
 }
 
