@@ -7,10 +7,6 @@ export default function Board({ board, gridSize, gameOverStatus, onCellClick }) 
   const [grid, setGrid] = useState([])
 
   useEffect(() => {
-    updateGrid()
-  }, [board, gameOverStatus])
-
-  function updateGrid() {
     setGrid(() => {
       const arr = []
       let i = 0
@@ -37,7 +33,7 @@ export default function Board({ board, gridSize, gameOverStatus, onCellClick }) 
       }
       return arr
     })
-  }
+  }, [board, gameOverStatus])
 
   return (
     <div className="container board ratio ratio-1x1 g-0">

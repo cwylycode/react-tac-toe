@@ -14,7 +14,7 @@ body{
 body.dark, .dark [class*=modal], .dark select{background-color: black !important;}
 .dark *:not(a, .color-react, .btn-bs) {color: white; border-color: white !important;}
 .dark .modal, .dark .modal-dialog{background-color: transparent !important;}
-.dark #ttt-logo, .dark .cell-icon, .dark .cell-strike, .dark .btn-close{filter: invert();}
+.dark #ttt-logo, .dark .cell-icon, .dark .cell-strike, .dark .btn-close, .dark .bg-dark{filter: invert();}
 
 .btn:focus{
   outline: none;

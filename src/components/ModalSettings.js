@@ -9,6 +9,8 @@ import {
   BsPalette,
 } from "react-icons/bs"
 
+const iconStyle = { translate: "0 -4px" }
+
 function UIDropdown({ id, state, setState, selections }) {
   const optionElements = function () {
     const els = []
@@ -56,7 +58,7 @@ function Setting({ children, description, icon, classes }) {
   return (
     <div className={classes}>
       <div className="d-flex align-items-center">
-        {icon}
+        <div className="fs-4">{icon}</div>
         <p className="m-0 ms-3">{description}</p>
       </div>
       {children}
@@ -79,7 +81,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Dark Mode"}
-        icon={<BsMoonStars />}
+        icon={<BsMoonStars style={iconStyle} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIToggle
           id={"darkModeActive"}
@@ -90,7 +92,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"AI Intelligence"}
-        icon={<BsSpeedometer />}
+        icon={<BsSpeedometer style={iconStyle} />}
         classes={"d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between pb-3"}>
         <UIBtnGrp
           id={"aiDifficulty"}
@@ -102,7 +104,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Grid Size"}
-        icon={<BsHash />}
+        icon={<BsHash style={iconStyle} />}
         classes={"d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between pb-3"}>
         <UIBtnGrp
           id={"gridSize"}
@@ -114,7 +116,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Player Token"}
-        icon={<BsPerson />}
+        icon={<BsPerson style={iconStyle} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIBtnGrp
           id={"playerToken"}
@@ -126,7 +128,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Player Color"}
-        icon={<BsPalette />}
+        icon={<BsPalette style={iconStyle} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIDropdown
           id={"playerTokenColor"}
@@ -138,7 +140,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Computer Color"}
-        icon={<BsPalette />}
+        icon={<BsPalette style={iconStyle} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIDropdown selections={COLORS} />
       </Setting>
