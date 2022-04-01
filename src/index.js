@@ -52,7 +52,7 @@ function App() {
     // Saving
     storage.setData("settings", settings)
     storage.setData("stats", stats)
-    storage.setData("secret", "RGlkIHlvdSBlbmpveSBteSB0aWMtdGFjLXRvZSBnYW1lPyBJZiB5b3UgZGlkLCBnaXZlIG15IEdpdEh1YiByZXBvc2l0b3J5IGEgc3RhciBhbmQgdGhlbiBnaXZlIHlvdXJzZWxmIGEgcGF0IG9uIHRoZSBiYWNrLiAgWW91IGFyZSBjbGV2ZXIgdG8gaGF2ZSBnb3R0ZW4gdGhpcyBmYXIh")
+    storage.setData("secret", "WW91IGFyZSBjbGV2ZXIgdG8gaGF2ZSBnb3R0ZW4gdGhpcyBmYXIhIFNvIS4uLkRpZCB5b3UgZW5qb3kgbXkgdGljLXRhYy10b2UgZ2FtZT8gSWYgeW91IGRpZCwgZ2l2ZSBteSBHaXRIdWIgcmVwb3NpdG9yeSBhIHN0YXIgYW5kIHRoZW4gZ2l2ZSB5b3Vyc2VsZiBhIHBhdCBvbiB0aGUgYmFjay4=")
   }, [settings, stats])
 
   useEffect(() => {
