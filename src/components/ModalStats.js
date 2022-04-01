@@ -41,14 +41,18 @@ export default function ModalStats({ stats, changeStat, onResetClick }) {
   const totals = stats.wins + stats.losses + stats.draws + stats.cheated
 
   useEffect(() => {
+    console.log("stat changed")
     if (stats.wins && stats.wins !== prevWinCount) {
       setStreak(prev => prev + 1)
       setPrevWinCount(stats.wins)
     } else {
-      if (stats.wins && stats.streak < streak) changeStat("streak", streak)
       setStreak(0)
     }
-  }, [stats])
+  }, [stats.wins, stats.losses, stats.draws, stats.cheated])
+
+  useEffect(() => {
+    if (stats.streak < streak) changeStat("streak", streak)
+  }, [streak])
 
   function getPercent(x) { return totals ? Math.floor(x / totals * 100) : 0 }
 
