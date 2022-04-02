@@ -1,19 +1,17 @@
-export function getData(key) {
-  if (!localStorage) return;
+// Get or set localstorage (and handle if storage is accessible - i.e. no cookies allowed)
 
+export function getData(key) {
   try {
     return JSON.parse(localStorage.getItem(key));
   } catch (err) {
-    console.error(`Error getting item ${key} from localStorage`, err);
+    return false;
   }
 };
 
 export function setData(key, item) {
-  if (!localStorage) return;
-
   try {
     return localStorage.setItem(key, JSON.stringify(item));
   } catch (err) {
-    console.error(`Error storing item ${key} to localStorage`, err);
+    return false;
   }
 };
