@@ -1,116 +1,219 @@
-body{
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* No selection of text */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Old versions of Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
-body.dark, .dark [class*=modal], .dark select{background-color: black !important;}
-.dark *:not(a, .color-react, .btn-bs) {color: white; border-color: white !important;}
-.dark .modal, .dark .modal-dialog{background-color: transparent !important;}
-.dark #ttt-logo, .dark .cell-icon, .dark .cell-strike, .dark .btn-close, .dark .bg-dark{filter: invert();}
 
-.btn:focus{
+body.dark,
+.dark [class*=modal],
+.dark select {
+  background-color: black !important;
+}
+
+.dark *:not(a, .color-react, .btn-bs) {
+  color: white;
+  border-color: white !important;
+}
+
+.dark .modal,
+.dark .modal-dialog {
+  background-color: transparent !important;
+}
+
+.dark #ttt-logo,
+.dark .cell-strike,
+.dark .btn-close,
+.dark .bg-dark {
+  filter: invert();
+}
+
+.dark .cell-icon {
+  filter: invert() drop-shadow(0px 0px 1em rgb(255, 255, 255));
+}
+
+.btn:focus {
   outline: none;
   box-shadow: none;
 }
 
-.color-react{color: rgb(97,218,251);}
-
-/* .color-red      { background-color: rgb(255,0,0) !important;  }
-.color-yellow   { background-color: rgb(255,255,0) !important;}
-.color-green    { background-color: rgb(0,255,0) !important;  }
-.color-cyan     { background-color: rgb(0,255,255) !important;}
-.color-blue     { background-color: rgb(0,0,255) !important;  }
-.color-magenta  { background-color: rgb(255,0,255) !important;} */
-
-.filter-red{
-  filter: invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 0.5em rgb(255,0,0));
-}
-.filter-yellow{
-  filter: invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 0.5em rgb(255,255,0));
-}
-.filter-green{
-  filter: invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 0.5em rgb(0,255,0));
-}
-.filter-cyan{
-  filter: invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 0.5em rgb(0,255,255));
-}
-.filter-blue{
-  filter: invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 0.5em rgb(0,0,255));
-}
-.filter-magenta{
-  filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 0.5em rgb(255,0,255));
+.color-react {
+  color: rgb(97, 218, 251);
 }
 
-.logo-size{
+.color-red {
+  filter: invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) !important;
+}
+
+.color-yellow {
+  filter: invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) !important;
+}
+
+.color-green {
+  filter: invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) !important;
+}
+
+.color-cyan {
+  filter: invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) !important;
+}
+
+.color-blue {
+  filter: invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) !important;
+}
+
+.color-magenta {
+  filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) !important;
+}
+
+.color-red-glow {
+  filter: invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 1em rgb(255, 0, 0)) !important;
+}
+
+.color-yellow-glow {
+  filter: invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 1em rgb(255, 255, 0)) !important;
+}
+
+.color-green-glow {
+  filter: invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 1em rgb(0, 255, 0)) !important;
+}
+
+.color-cyan-glow {
+  filter: invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 1em rgb(0, 255, 255)) !important;
+}
+
+.color-blue-glow {
+  filter: invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 1em rgb(0, 0, 255)) !important;
+}
+
+.color-magenta-glow {
+  filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 1em rgb(255, 0, 255)) !important;
+}
+
+.logo-size {
   height: calc(2rem + 1.5vw);
   margin: 0px 5px 5px 5px;
 }
 
-.cell-icon{
+.cell-icon {
   width: 80%;
 }
+
 .cell-strike {
   background-color: black;
-	min-width: 4%;
-	position: absolute;
-	height: 150%;
-	left: calc(50% - 2%);
-	top: calc(50% / -2);
+  min-width: 4%;
+  position: absolute;
+  height: 150%;
+  left: calc(50% - 2%);
+  top: calc(50% / -2);
 }
-.cell-strike-h {rotate: 90deg;}
-.cell-strike-dl {rotate: -45deg;}
-.cell-strike-dr {rotate: 45deg;}
 
-.toggle{
+.cell-strike-h {
+  rotate: 90deg;
+}
+
+.cell-strike-dl {
+  rotate: -45deg;
+}
+
+.cell-strike-dr {
+  rotate: 45deg;
+}
+
+.toggle {
   width: 4em !important;
   height: 2em !important;
 }
-.toggle:checked{
+
+.toggle:checked {
   background-color: black;
   border-color: white;
   filter: invert(100%);
 }
 
-.board {max-width: 25em;}
+.board {
+  max-width: 25em;
+}
 
 /* Animations */
 
 @keyframes CellZoomIn {
-  0% {width: 0%;}
-  50% {width: 100%;}
-  100% {width: 80%;}
+  0% {
+    width: 0%;
+  }
+
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 80%;
+  }
 }
+
 @keyframes CellZoomOut {
-  0% {width: 80%;}
-  50% {width: 100%;}
-  100% {width: 0%;}
+  0% {
+    width: 80%;
+  }
+
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0%;
+  }
 }
-.cell > .zoom-in {
+
+.cell>.zoom-in {
   animation-name: CellZoomIn;
   animation-duration: 0.25s;
   animation-fill-mode: both;
 }
-.cell > .zoom-out {
+
+.cell>.zoom-out {
   animation-name: CellZoomOut;
   animation-duration: 0.25s;
   animation-fill-mode: both;
 }
 
-.btn-anim > svg{
+.btn-anim>svg {
   transition-property: scale, transform;
   transition-duration: 0.25s, 0.5s;
 }
-.btn-anim:active > svg{scale: 0.5;}
-.btn-anim.btn-anim-ml:hover > svg{transform: translateX(-10px);}
-.btn-anim.btn-anim-mr:hover > svg{transform: translateX(10px);}
-.btn-anim.btn-anim-sx:hover > svg{transform: scale(1.5,1);}
-.btn-anim.btn-anim-sy:hover > svg{transform: scale(1,1.5);}
-.btn-anim.btn-anim-rot:hover > svg{transform: rotate(180deg);}
+
+.btn-anim:active>svg {
+  scale: 0.5;
+}
+
+.btn-anim.btn-anim-ml:hover>svg {
+  transform: translateX(-10px);
+}
+
+.btn-anim.btn-anim-mr:hover>svg {
+  transform: translateX(10px);
+}
+
+.btn-anim.btn-anim-sx:hover>svg {
+  transform: scale(1.5, 1);
+}
+
+.btn-anim.btn-anim-sy:hover>svg {
+  transform: scale(1, 1.5);
+}
+
+.btn-anim.btn-anim-rot:hover>svg {
+  transform: rotate(180deg);
+}

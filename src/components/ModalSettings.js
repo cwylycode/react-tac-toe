@@ -9,8 +9,6 @@ import {
   BsPalette,
 } from "react-icons/bs"
 
-const iconStyle = { translate: "0 -4px" }
-
 function UIDropdown({ id, state, setState, selections }) {
   const optionElements = function () {
     const els = []
@@ -20,7 +18,7 @@ function UIDropdown({ id, state, setState, selections }) {
     return els
   }()
   return (
-    <select id={id} className="form-select w-auto" aria-label="Select" onChange={(e) => { setState(id, e.target.value) }} >
+    <select id={id} className="form-select btn-outline-secondary w-auto" aria-label="Select" value={state} onChange={(e) => { setState(id, e.target.value) }} >
       {optionElements}
     </select>
   )
@@ -81,7 +79,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Dark Mode"}
-        icon={<BsMoonStars style={iconStyle} />}
+        icon={<BsMoonStars style={{ translate: "0 -4px" }} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIToggle
           id={"darkModeActive"}
@@ -92,7 +90,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"AI Intelligence"}
-        icon={<BsSpeedometer style={iconStyle} />}
+        icon={<BsSpeedometer style={{ translate: "0 -4px" }} />}
         classes={"d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between pb-3"}>
         <UIBtnGrp
           id={"aiDifficulty"}
@@ -104,7 +102,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Grid Size"}
-        icon={<BsHash style={iconStyle} />}
+        icon={<BsHash style={{ translate: "0 -4px" }} />}
         classes={"d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between pb-3"}>
         <UIBtnGrp
           id={"gridSize"}
@@ -116,7 +114,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Player Token"}
-        icon={<BsPerson style={iconStyle} />}
+        icon={<BsPerson style={{ translate: "0 -4px" }} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIBtnGrp
           id={"playerToken"}
@@ -128,7 +126,7 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Player Color"}
-        icon={<BsPalette style={iconStyle} />}
+        icon={<BsPalette style={{ translate: "0 -4px" }} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
         <UIDropdown
           id={"playerTokenColor"}
@@ -140,9 +138,14 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
 
       <Setting
         description={"Computer Color"}
-        icon={<BsPalette style={iconStyle} />}
+        icon={<BsPalette style={{ translate: "0 -4px" }} />}
         classes={"d-flex align-items-center justify-content-between pb-3"}>
-        <UIDropdown selections={COLORS} />
+        <UIDropdown
+          id={"cpuTokenColor"}
+          state={settings.cpuTokenColor}
+          setState={changeSetting}
+          selections={COLORS}>
+        </UIDropdown>
       </Setting>
 
     </ModalBase>

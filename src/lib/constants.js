@@ -18,27 +18,27 @@ export const COLORS = {
   },
   Red: {
     name: "Red",
-    value: "filter-red"
+    value: "color-red"
   },
   Yellow: {
     name: "Yellow",
-    value: "filter-yellow"
+    value: "color-yellow"
   },
   Green: {
     name: "Green",
-    value: "filter-green"
+    value: "color-green"
   },
   Cyan: {
     name: "Cyan",
-    value: "filter-cyan"
+    value: "color-cyan"
   },
   Blue: {
     name: "Blue",
-    value: "filter-blue"
+    value: "color-blue"
   },
   Magenta: {
     name: "Magenta",
-    value: "filter-magenta"
+    value: "color-magenta"
   },
 }
 

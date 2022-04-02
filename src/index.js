@@ -171,7 +171,17 @@ function App() {
         <Board
           board={board}
           gridSize={settings.gridSize}
-          onGameOver={gameOverStatus}
+          cellColors={{
+            [settings.playerToken]: (() => {
+              if (settings.darkModeActive) return settings.playerTokenColor + "-glow"
+              return settings.playerTokenColor
+            })(),
+            [settings.cpuToken]: (() => {
+              if (settings.darkModeActive) return settings.cpuTokenColor + "-glow"
+              return settings.cpuTokenColor
+            })()
+          }}
+          gameOverStatus={gameOverStatus}
           onCellClick={onCellClick}
         />
         <History
