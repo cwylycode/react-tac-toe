@@ -26,7 +26,7 @@ body.dark,
 
 .dark *:not(a, .color-react, .btn-bs) {
   color: white;
-  border-color: white !important;
+  border-color: white;
 }
 
 .dark .modal,
@@ -41,7 +41,8 @@ body.dark,
   filter: invert();
 }
 
-.dark .cell-icon {
+.dark .cell-icon,
+.dark .cell-strike {
   filter: invert() drop-shadow(0px 0px 1em rgb(255, 255, 255));
 }
 
@@ -107,6 +108,14 @@ body.dark,
   margin: 0px 5px 5px 5px;
 }
 
+.board {
+  max-width: 25em;
+}
+
+.cell {
+  border-color: black;
+}
+
 .cell-icon {
   width: 80%;
 }
@@ -120,15 +129,15 @@ body.dark,
   top: calc(50% / -2);
 }
 
-.cell-strike-h {
+.cell-strike-hor {
   rotate: 90deg;
 }
 
-.cell-strike-dl {
+.cell-strike-ccw {
   rotate: -45deg;
 }
 
-.cell-strike-dr {
+.cell-strike-cw {
   rotate: 45deg;
 }
 
@@ -141,10 +150,6 @@ body.dark,
   background-color: black;
   border-color: white;
   filter: invert(100%);
-}
-
-.board {
-  max-width: 25em;
 }
 
 /* Animations */
@@ -177,13 +182,47 @@ body.dark,
   }
 }
 
-.cell>.zoom-in {
+@keyframes CellBlink {
+  from {
+    visibility: visible;
+  }
+
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes BorderBlink {
+  0% {
+    border-color: currentColor;
+  }
+
+  100% {
+    border-color: transparent;
+  }
+}
+
+.cell-blink {
+  animation-name: CellBlink;
+  animation-duration: 0.25s;
+  animation-iteration-count: 3;
+  animation-timing-function: steps(2, jump-none);
+}
+
+.border-blink {
+  animation-name: BorderBlink;
+  animation-duration: 0.25s;
+  animation-iteration-count: 3;
+  animation-timing-function: steps(2, jump-none);
+}
+
+.zoom-in {
   animation-name: CellZoomIn;
   animation-duration: 0.25s;
   animation-fill-mode: both;
 }
 
-.cell>.zoom-out {
+.zoom-out {
   animation-name: CellZoomOut;
   animation-duration: 0.25s;
   animation-fill-mode: both;

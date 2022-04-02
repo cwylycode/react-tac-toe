@@ -26,7 +26,7 @@ export default function Board({ board, gridSize, cellColors, gameOverStatus, onC
               cellValue={board[i]}
               borders={borders}
               colors={cellColors}
-              gameStatus={gameOverStatus}
+              gameOverStatus={gameOverStatus}
               onCellClick={onCellClick}
             />)
           i++
