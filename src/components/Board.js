@@ -2,7 +2,7 @@ import Cell from "./Cell"
 
 import { useEffect, useState } from "react"
 
-export default function Board({ board, gridSize, cellColors, gameOverStatus, onCellClick }) {
+export default function Board({ board, gridSize, cellColors, gameResults, onCellClick }) {
 
   const [grid, setGrid] = useState([])
 
@@ -26,7 +26,7 @@ export default function Board({ board, gridSize, cellColors, gameOverStatus, onC
               cellValue={board[i]}
               borders={borders}
               colors={cellColors}
-              gameOverStatus={gameOverStatus}
+              gameResults={gameResults}
               onCellClick={onCellClick}
             />)
           i++
@@ -34,7 +34,7 @@ export default function Board({ board, gridSize, cellColors, gameOverStatus, onC
       }
       return arr
     })
-  }, [board, gameOverStatus])
+  }, [board, gameResults])
 
   return (
     <div className="container board ratio ratio-1x1 g-0">

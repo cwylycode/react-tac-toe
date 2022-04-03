@@ -41,13 +41,14 @@ function App() {
   // Game states
   const isGameOver = useRef(false)
   const [gameOverStatus, setGameOverStatus] = useState("")
+  const [gameResults, setGameResults] = useState("")
   const [didCheat, setDidCheat] = useState(false)
   const [board, setBoard] = useState(initBoard())
   const [boardHistory, setBoardHistory] = useState([initBoard()])
   const historyPoint = useRef(0)
   const playerFirst = useRef(true)
   const [playersTurn, setPlayersTurn] = useState(true)
-  const [canClick, setCanClick] = useState(true)
+  const canClick = useRef(true)
 
   useEffect(() => {
     // Saving
@@ -88,10 +89,16 @@ function App() {
     }
   }, [board])
 
-  // useEffect(() => {
-  //   // set gamover status here maybe
-  //   if (isGameOver.current) console.log("game over")
-  // }, [isGameOver.current])
+  useEffect(() => {
+    if (gameOverStatus) {
+      const delay = setTimeout(() => {
+        console.log(gameOverStatus)
+        canClick.current = true
+        setGameResults(gameOverStatus)
+      }, 1000)
+      return () => clearTimeout(delay)
+    }
+  }, [gameOverStatus])
 
   function loadData(dataTypeToLoad) {
     const load = storage.getData(dataTypeToLoad)
@@ -109,6 +116,7 @@ function App() {
 
   function resetGame(userOverride = false) {
     setGameOverStatus("")
+    setGameResults("")
     isGameOver.current = false
     historyPoint.current = 0
     // User override makes sure player goes first if setting changes resets the game
@@ -121,12 +129,10 @@ function App() {
 
   function onGameOver(result) {
     isGameOver.current = true
-    setCanClick(false)
     playerFirst.current = !playerFirst.current
+    canClick.current = false
     setBoardHistory([initBoard()])
-
     setGameOverStatus(result)
-
     // Figure out stats
     if (didCheat) {
       changeStat("cheated", stats.cheated + 1)
@@ -149,7 +155,7 @@ function App() {
 
   // Player clicked on board cell
   function onCellClick(cellID) {
-    if (!canClick) return
+    if (!canClick.current) return
     if (isGameOver.current) {
       resetGame()
       return
@@ -186,7 +192,7 @@ function App() {
             [settings.playerToken]: [settings.playerTokenColor],
             [settings.cpuToken]: [settings.cpuTokenColor]
           }}
-          gameOverStatus={gameOverStatus}
+          gameResults={gameResults}
           onCellClick={onCellClick}
         />
         <History

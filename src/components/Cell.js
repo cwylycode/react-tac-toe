@@ -4,7 +4,7 @@ import { TOKENS } from "../lib/constants.js"
 
 import { useEffect, useState } from "react"
 
-export default function Cell({ cellID, cellValue, borders, colors, gameOverStatus, onCellClick }) {
+export default function Cell({ cellID, cellValue, borders, colors, gameResults, onCellClick }) {
 
   const [icon, setIcon] = useState("")
   const [color, setColor] = useState("")
@@ -36,13 +36,13 @@ export default function Cell({ cellID, cellValue, borders, colors, gameOverStatu
   }, [cellValue])
 
   useEffect(() => {
-    if (gameOverStatus) {
-      if (gameOverStatus === "draw") {
+    if (gameResults) {
+      if (gameResults === "draw") {
         setAnimBorder(true)
         return
       } else {
-        const token = gameOverStatus.token
-        const line = gameOverStatus.winLine
+        const token = gameResults.token
+        const line = gameResults.winLine
         const strikeType = function () {
           // A strike can be figured out by the first two cells
           const gridsize = line.length
@@ -60,7 +60,7 @@ export default function Cell({ cellID, cellValue, borders, colors, gameOverStatu
         }
       }
     }
-  }, [gameOverStatus])
+  }, [gameResults])
 
   return (
     <button id={cellID} type="button" onClick={() => (onCellClick(cellID))} className={`cell ${animBorder ? "border-blink" : ""} col btn position-relative rounded-0 border-5 ${borders}`}>
