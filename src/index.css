@@ -1,6 +1,4 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+:root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* No selection of text */
@@ -18,6 +16,16 @@ body {
   /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
 body.dark,
 .dark [class*=modal],
 .dark select {
@@ -29,6 +37,10 @@ body.dark,
   border-color: white;
 }
 
+.dark label {
+  border-color: white !important;
+}
+
 .dark .modal,
 .dark .modal-dialog {
   background-color: transparent !important;
@@ -37,13 +49,10 @@ body.dark,
 .dark #ttt-logo,
 .dark .cell-strike,
 .dark .btn-close,
-.dark .bg-dark {
-  filter: invert();
-}
-
+.dark .bg-dark,
 .dark .cell-icon,
 .dark .cell-strike {
-  filter: invert() drop-shadow(0px 0px 1em rgb(255, 255, 255));
+  filter: invert();
 }
 
 .btn:focus {
@@ -79,30 +88,6 @@ body.dark,
   filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) !important;
 }
 
-.color-red-glow {
-  filter: invert(15%) sepia(88%) saturate(6187%) hue-rotate(359deg) brightness(92%) contrast(119%) drop-shadow(0px 0px 1em rgb(255, 0, 0)) !important;
-}
-
-.color-yellow-glow {
-  filter: invert(96%) sepia(68%) saturate(1962%) hue-rotate(359deg) brightness(109%) contrast(102%) drop-shadow(0px 0px 1em rgb(255, 255, 0)) !important;
-}
-
-.color-green-glow {
-  filter: invert(55%) sepia(48%) saturate(4149%) hue-rotate(88deg) brightness(122%) contrast(124%) drop-shadow(0px 0px 1em rgb(0, 255, 0)) !important;
-}
-
-.color-cyan-glow {
-  filter: invert(86%) sepia(100%) saturate(4818%) hue-rotate(106deg) brightness(104%) contrast(108%) drop-shadow(0px 0px 1em rgb(0, 255, 255)) !important;
-}
-
-.color-blue-glow {
-  filter: invert(11%) sepia(100%) saturate(4776%) hue-rotate(244deg) brightness(96%) contrast(153%) drop-shadow(0px 0px 1em rgb(0, 0, 255)) !important;
-}
-
-.color-magenta-glow {
-  filter: invert(41%) sepia(82%) saturate(7488%) hue-rotate(293deg) brightness(110%) contrast(135%) drop-shadow(0px 0px 1em rgb(255, 0, 255)) !important;
-}
-
 .logo-size {
   height: calc(2rem + 1.5vw);
   margin: 0px 5px 5px 5px;
@@ -130,15 +115,15 @@ body.dark,
 }
 
 .cell-strike-hor {
-  rotate: 90deg;
+  transform: rotate(90deg);
 }
 
 .cell-strike-ccw {
-  rotate: -45deg;
+  transform: rotate(-45deg);
 }
 
 .cell-strike-cw {
-  rotate: 45deg;
+  transform: rotate(45deg);
 }
 
 .toggle {
@@ -183,21 +168,13 @@ body.dark,
 }
 
 @keyframes CellBlink {
-  from {
-    visibility: visible;
-  }
-
-  to {
-    visibility: hidden;
+  50% {
+    opacity: 0;
   }
 }
 
 @keyframes BorderBlink {
-  0% {
-    border-color: currentColor;
-  }
-
-  100% {
+  50% {
     border-color: transparent;
   }
 }
@@ -206,14 +183,14 @@ body.dark,
   animation-name: CellBlink;
   animation-duration: 0.25s;
   animation-iteration-count: 3;
-  animation-timing-function: steps(2, jump-none);
+  animation-timing-function: steps(1);
 }
 
 .border-blink {
   animation-name: BorderBlink;
   animation-duration: 0.25s;
   animation-iteration-count: 3;
-  animation-timing-function: steps(2, jump-none);
+  animation-timing-function: steps(1);
 }
 
 .zoom-in {
