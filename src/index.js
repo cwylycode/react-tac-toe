@@ -47,6 +47,7 @@ function App() {
   const historyPoint = useRef(0)
   const playerFirst = useRef(true)
   const [playersTurn, setPlayersTurn] = useState(true)
+  const [canClick, setCanClick] = useState(true)
 
   useEffect(() => {
     // Saving
@@ -87,6 +88,11 @@ function App() {
     }
   }, [board])
 
+  // useEffect(() => {
+  //   // set gamover status here maybe
+  //   if (isGameOver.current) console.log("game over")
+  // }, [isGameOver.current])
+
   function loadData(dataTypeToLoad) {
     const load = storage.getData(dataTypeToLoad)
     if (!load) return dataTypeToLoad === "settings" ? defaultSettings : defaultStats
@@ -102,6 +108,7 @@ function App() {
   }
 
   function resetGame(userOverride = false) {
+    setGameOverStatus("")
     isGameOver.current = false
     historyPoint.current = 0
     // User override makes sure player goes first if setting changes resets the game
@@ -114,9 +121,12 @@ function App() {
 
   function onGameOver(result) {
     isGameOver.current = true
+    setCanClick(false)
     playerFirst.current = !playerFirst.current
     setBoardHistory([initBoard()])
+
     setGameOverStatus(result)
+
     // Figure out stats
     if (didCheat) {
       changeStat("cheated", stats.cheated + 1)
@@ -131,7 +141,7 @@ function App() {
 
   function onHistoryClick(forward = false) {
     if (!playersTurn) return
-    setDidCheat(true) //Cheater cheater pumpkin-eater
+    setDidCheat(true) //Cheater cheater pumpkin eater
     const direction = forward ? 2 : -2
     historyPoint.current += direction
     setBoard(boardHistory[historyPoint.current])
@@ -139,6 +149,7 @@ function App() {
 
   // Player clicked on board cell
   function onCellClick(cellID) {
+    if (!canClick) return
     if (isGameOver.current) {
       resetGame()
       return
@@ -173,6 +184,7 @@ function App() {
           gridSize={settings.gridSize}
           cellColors={{
             [settings.playerToken]: [settings.playerTokenColor],
+            [settings.cpuToken]: [settings.cpuTokenColor]
           }}
           gameOverStatus={gameOverStatus}
           onCellClick={onCellClick}
