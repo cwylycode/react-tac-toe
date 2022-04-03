@@ -172,14 +172,7 @@ function App() {
           board={board}
           gridSize={settings.gridSize}
           cellColors={{
-            [settings.playerToken]: (() => {
-              if (settings.darkModeActive) return settings.playerTokenColor + "-glow"
-              return settings.playerTokenColor
-            })(),
-            [settings.cpuToken]: (() => {
-              if (settings.darkModeActive) return settings.cpuTokenColor + "-glow"
-              return settings.cpuTokenColor
-            })()
+            [settings.playerToken]: [settings.playerTokenColor],
           }}
           gameOverStatus={gameOverStatus}
           onCellClick={onCellClick}
