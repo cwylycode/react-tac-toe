@@ -1,6 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.css"
+import sfx_win from "./sfx/win.mp3"
+import sfx_lose from "./sfx/lose.mp3"
+import sfx_draw from "./sfx/draw.mp3"
+import sfx_token1 from "./sfx/token1.mp3"
+import sfx_token2 from "./sfx/token2.mp3"
 import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 
@@ -92,9 +97,9 @@ function App() {
   useEffect(() => {
     if (gameOverStatus) {
       const delay = setTimeout(() => {
-        console.log(gameOverStatus)
         canClick.current = true
         setGameResults(gameOverStatus)
+        playSound(sfx_lose)
       }, 1000)
       return () => clearTimeout(delay)
     }
@@ -112,6 +117,11 @@ function App() {
 
   function changeStat(k, val) {
     setStats(prev => { return { ...prev, [k]: val } })
+  }
+
+  function playSound(sfx_obj) {
+    const audio_html = document.getElementById(sfx_obj)
+    audio_html.play()
   }
 
   function resetGame(userOverride = false) {
@@ -167,6 +177,7 @@ function App() {
   // Used by both player and cpu to place their tokens on the board
   function placeToken(cellID) {
     const currentToken = playersTurn ? settings.playerToken : settings.cpuToken
+    playSound(currentToken === settings.playerToken ? sfx_token1 : sfx_token2)
     const newBoard = board.map((val, idx) => {
       return idx === cellID ? currentToken : val
     })
@@ -213,6 +224,13 @@ function App() {
         settings={settings}
         changeSetting={changeSetting}
       />
+      <div id="audio">
+        <audio id={sfx_win} src={sfx_win} typeof="audio/mp3" preload="auto" />
+        <audio id={sfx_lose} src={sfx_lose} typeof="audio/mp3" preload="auto" />
+        <audio id={sfx_draw} src={sfx_draw} typeof="audio/mp3" preload="auto" />
+        <audio id={sfx_token1} src={sfx_token1} typeof="audio/mp3" preload="auto" />
+        <audio id={sfx_token2} src={sfx_token2} typeof="audio/mp3" preload="auto" />
+      </div>
     </div>
   )
 }
