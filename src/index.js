@@ -1,17 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.css"
-import sfx_win from "./sfx/win.mp3"
-import sfx_lose from "./sfx/lose.mp3"
-import sfx_draw from "./sfx/draw.mp3"
-import sfx_token1 from "./sfx/token1.mp3"
-import sfx_token2 from "./sfx/token2.mp3"
+import sound_win from "./sfx/win.mp3"
+import sound_lose from "./sfx/lose.mp3"
+import sound_draw from "./sfx/draw.mp3"
+import sound_token1 from "./sfx/token1.mp3"
+import sound_token2 from "./sfx/token2.mp3"
+
 import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
+import useSound from "use-sound"
 
 import * as AI from "./lib/ai"
 import * as storage from "./lib/storage"
-import { AILEVELS, COLORS, GRIDSIZES, TOKENS } from "./lib/constants"
+import { AILEVELS, COLORS, GRIDSIZES, TOGGLE, TOKENS } from "./lib/constants"
 
 import Header from './components/Header'
 import Board from "./components/Board"
@@ -22,6 +24,7 @@ import ModalSettings from "./components/ModalSettings"
 
 const defaultSettings = {
   darkModeActive: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
+  soundActive: TOGGLE.On.value,
   aiDifficulty: AILEVELS.easy.value,
   gridSize: GRIDSIZES.three.value,
   playerToken: TOKENS.X.value,
@@ -42,6 +45,13 @@ function App() {
   // Storage
   const [settings, setSettings] = useState(loadData("settings"))
   const [stats, setStats] = useState(loadData("stats"))
+
+  // Sounds
+  const [sfx_win] = useSound(sound_win)
+  const [sfx_lose] = useSound(sound_lose)
+  const [sfx_draw] = useSound(sound_draw)
+  const [sfx_token1] = useSound(sound_token1)
+  const [sfx_token2] = useSound(sound_token2)
 
   // Game states
   const isGameOver = useRef(false)
@@ -96,10 +106,19 @@ function App() {
 
   useEffect(() => {
     if (gameOverStatus) {
+      // Give a flashy game over with blinking and sfx
       const delay = setTimeout(() => {
         canClick.current = true
         setGameResults(gameOverStatus)
-        playSound(sfx_lose)
+        if (gameOverStatus === "draw") {
+          playSound(sfx_draw)
+        } else {
+          if (gameOverStatus.token === settings.playerToken) {
+            playSound(sfx_win)
+          } else {
+            playSound(sfx_lose)
+          }
+        }
       }, 1000)
       return () => clearTimeout(delay)
     }
@@ -119,9 +138,10 @@ function App() {
     setStats(prev => { return { ...prev, [k]: val } })
   }
 
-  function playSound(sfx_obj) {
-    const audio_html = document.getElementById(sfx_obj)
-    audio_html.play()
+  function playSound(sfx) {
+    if (settings.soundActive === "true") {
+      sfx()
+    }
   }
 
   function resetGame(userOverride = false) {
@@ -224,13 +244,6 @@ function App() {
         settings={settings}
         changeSetting={changeSetting}
       />
-      <div id="audio">
-        <audio id={sfx_win} src={sfx_win} typeof="audio/mp3" preload="auto" />
-        <audio id={sfx_lose} src={sfx_lose} typeof="audio/mp3" preload="auto" />
-        <audio id={sfx_draw} src={sfx_draw} typeof="audio/mp3" preload="auto" />
-        <audio id={sfx_token1} src={sfx_token1} typeof="audio/mp3" preload="auto" />
-        <audio id={sfx_token2} src={sfx_token2} typeof="audio/mp3" preload="auto" />
-      </div>
     </div>
   )
 }

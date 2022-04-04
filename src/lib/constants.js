@@ -9,6 +9,17 @@ export const TOKENS = {
   }
 }
 
+export const TOGGLE = {
+  On: {
+    name: "On",
+    value: "true"
+  },
+  Off: {
+    name: "Off",
+    value: "false"
+  }
+}
+
 export const COLORS = {
   // CSS class definitions to be used for the tokens
   // https://codepen.io/sosuke/pen/Pjoqqp

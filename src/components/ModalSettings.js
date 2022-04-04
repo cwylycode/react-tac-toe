@@ -1,8 +1,9 @@
 import React from "react";
 import ModalBase from "./ModalBase";
-import { AILEVELS, COLORS, GRIDSIZES, TOKENS } from "../lib/constants"
+import { AILEVELS, COLORS, GRIDSIZES, TOGGLE, TOKENS } from "../lib/constants"
 import {
   BsMoonStars,
+  BsVolumeUp,
   BsSpeedometer,
   BsHash,
   BsPerson,
@@ -86,6 +87,18 @@ export default function ModalSettings({ onResetClick, settings, changeSetting })
           state={settings.darkModeActive}
           setState={changeSetting}>
         </UIToggle>
+      </Setting>
+
+      <Setting
+        description={"Sounds"}
+        icon={<BsVolumeUp style={{ translate: "0 -4px" }} />}
+        classes={"d-flex align-items-center justify-content-between pb-3"}>
+        <UIBtnGrp
+          id={"soundActive"}
+          state={settings.soundActive}
+          setState={changeSetting}
+          selections={TOGGLE}>
+        </UIBtnGrp>
       </Setting>
 
       <Setting
