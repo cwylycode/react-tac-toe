@@ -41,7 +41,6 @@ export default function Cell({ cellID, cellValue, borders, colors, gameResults, 
         setAnimBorder(true)
         return
       } else {
-        const token = gameResults.token
         const line = gameResults.winLine
         const strikeType = function () {
           // A strike can be figured out by the first two cells
