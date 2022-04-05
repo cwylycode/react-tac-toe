@@ -47,11 +47,11 @@ function App() {
   const [stats, setStats] = useState(loadData("stats"))
 
   // Sounds
-  const [sfx_win] = useSound(sound_win)
-  const [sfx_lose] = useSound(sound_lose)
-  const [sfx_draw] = useSound(sound_draw)
-  const [sfx_token1] = useSound(sound_token1)
-  const [sfx_token2] = useSound(sound_token2)
+  const sfx_win = useSound(sound_win)
+  const sfx_lose = useSound(sound_lose)
+  const sfx_draw = useSound(sound_draw)
+  const sfx_token1 = useSound(sound_token1)
+  const sfx_token2 = useSound(sound_token2)
 
   // Game states
   const isGameOver = useRef(false)
@@ -140,7 +140,7 @@ function App() {
 
   function playSound(sfx) {
     if (settings.soundActive) {
-      sfx()
+      sfx[0]()
     }
   }
 

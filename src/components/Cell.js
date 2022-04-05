@@ -69,7 +69,6 @@ export default function Cell({ cellID, cellValue, gridSize, borders, colors, gam
       <img
         className={`cell-icon ${color} ${cellAnim} ${cellAnim ? "" : "invisible"} position-absolute translate-middle`}
         src={icon}
-        alt="Cell Icon"
       ></img>
       <div className={`${strike} ${color}`}></div>
     </button>
