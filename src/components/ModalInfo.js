@@ -17,7 +17,7 @@ export default function ModalInfo() {
         <p>A Tic-Tac-Toe game made with React</p>
         <p>Pick your token and play against the computer and win (or lose...or draw). But most of all, have fun!</p>
         <br />
-        <p>Made by <a href="https://cwylycode.github.io" target={"_blank"}>cwylycode</a></p>
+        <p>Made by <a href="https://cwylycode.github.io" target={"_blank"} referrerPolicy={"no-referrer"}>Colin Wyly</a></p>
         <p>This web app is free and open source. For more information about the app and project, vist the GitHub link below.</p>
         <p>Feel free to check out my other projects, too!</p>
       </div>
