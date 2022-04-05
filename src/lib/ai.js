@@ -1,5 +1,6 @@
 import { LINES } from "./constants"
 
+const MAX_DEPTH = 5 // 5 is a good balance between quick compute time and accuracy
 let aiRandomnessFactor = 0
 let gridSize = 0
 let playerToken = ""
@@ -20,9 +21,10 @@ export function updateConfig(playerTkn, cpuTkn, gridsize, aiLevel) {
 // For both the ai and the game itself to know if a win/loss/draw has occured
 export function getBoardStatus(board) {
   const winningLines = LINES[gridSize]
+  const lineLength = winningLines[0].length
   for (let line of winningLines) {
-    const arr = Array(gridSize)
-    for (let i = 0; i < gridSize; i++) {
+    const arr = Array(lineLength)
+    for (let i = 0; i < lineLength; i++) {
       arr[i] = board[line[i]]
     }
     if (arr[0] && arr.every((e) => e === arr[0])) {
@@ -37,87 +39,88 @@ export function getBoardStatus(board) {
 
 export function getAIMove(board) {
   if (board.every(e => e === null)) {
-    // AI goes first and the board is empty - pick a random cell
-    const selection = Math.floor(Math.random() * board.length)
-    return selection
+    // AI is going first and the board is empty - pick a random cell
+    return Math.floor(Math.random() * board.length)
   }
-  return minimax(board, cpuToken).index
+  if (Math.random() > aiRandomnessFactor) {
+    // For a less-than-perfect computer player
+    const available = getAvailableSpots(board)
+    return available[Math.floor(Math.random() * available.length)]
+  }
+  // Calculate the best possible move for AI (factoring in depth limitations)
+  return minimax(board, 0, -10000, 10000, cpuToken).index
+}
+
+function getAvailableSpots(board) {
+  const spots = []
+  for (var i = 0; i < board.length; i++) {
+    if (board[i] === null) {
+      spots.push(i)
+    }
+  }
+  return spots
 }
 
 // Minimax algorithm code kindly provided by jatin-47 - and then I went and fiddled with it.
 // https://github.com/jatin-47/Tic-Tac-Toe/
 
-//dumb minimax with some randomness
-function minimax(newBoard, currentToken) {
-  const availSpots = []
-  for (var i = 0; i < newBoard.length; i++) {
-    if (newBoard[i] === null)
-      availSpots.push(i)
-  }
+//minimax with alpha-beta pruning and max-depth for sane computation times
+function minimax(newBoard, depth, alpha, beta, currentToken) {
+  const availSpots = getAvailableSpots(newBoard)
 
   // if terminal state reaches, return with the score
   const boardResult = getBoardStatus(newBoard)
   if (boardResult.token && boardResult.token === cpuToken) //let opponent(ai) be the minimizer
-    return { score: -10 }
-  else if (boardResult.token && boardResult.token === playerToken) // let player1(human) be the maximiser
-    return { score: 10 }
-  else if (boardResult === "draw") // tie 
+    return { score: -20 + depth }
+  else if (boardResult.token && boardResult.token === playerToken) // let placurrentTokenyer1(human) be the maximiser
+    return { score: 20 - depth }
+  else if (boardResult === "draw" || depth > MAX_DEPTH) // tie or depth limit reached
     return { score: 0 }
 
-  //storing score and index for each move possible from the given board state
-  var moves = []
+  //if it is the ai's turn, lowest score (as we have taken ai as the minimiser)
+  if (currentToken === cpuToken) {
+    var bestScore = 10000;
+    var bestMove = {};
+    for (var i = 0; i < availSpots.length; i++) {
+      newBoard[availSpots[i]] = currentToken; // set the empty spot to the current player
 
-  // loop through all available spots
-  for (var i = 0; i < availSpots.length; i++) {
-    //create an object for each and store the index of that spot 
-    var move = {}
-    move.index = availSpots[i]
-    newBoard[availSpots[i]] = currentToken // set the empty spot to the current player
-
-    //collect the score resulted from calling minimax on the opponent of the current player
-    if (currentToken == cpuToken) {
-      var result = minimax(newBoard, playerToken)
-      move.score = result.score
-    }
-    else {
-      var result = minimax(newBoard, cpuToken)
-      move.score = result.score
-    }
-    // reset the spot to empty for the next loop itereration   
-    newBoard[availSpots[i]] = null
-    // push the object to the array
-    moves.push(move)
-  }
-
-  // evaluating the best move in the moves array (i.e. all the possible moves)
-  var bestMove
-
-  if (Math.random() > aiRandomnessFactor) {
-    // For a less-than-perfect AI player
-    bestMove = Math.floor(Math.random() * moves.length)
-  }
-  else {
-    //if it is the ai's turn loop over the moves and choose the move with the lowest score 
-    //as we have taken ai as the minimiser
-    if (currentToken === cpuToken) {
-      var bestScore = 10000
-      for (var i = 0; i < moves.length; i++) {
-        if (moves[i].score < bestScore) {
-          bestScore = moves[i].score
-          bestMove = i
-        }
+      var value = minimax(newBoard, depth + 1, alpha, beta, playerToken);
+      if (value.score < bestScore) {
+        bestScore = value.score;
+        bestMove.index = availSpots[i];
+        bestMove.score = bestScore;
       }
-    }// else loop over the moves and choose the move with the highest score (as human player is the maximiser)
-    else {
-      var bestScore = -10000
-      for (var i = 0; i < moves.length; i++) {
-        if (moves[i].score > bestScore) {
-          bestScore = moves[i].score
-          bestMove = i
-        }
-      }
+
+      // reset the spot to empty for the next loop itereration
+      newBoard[availSpots[i]] = null;
+
+      beta = Math.min(beta, bestScore);
+      if (beta <= alpha)
+        break;
     }
+    return bestMove;
   }
-  // return the chosen move (object) from the moves array
-  return moves[bestMove]
+  else // else highest score (as human player is the maximiser)
+  {
+    var bestScore = -10000;
+    var bestMove = {};
+    for (var i = 0; i < availSpots.length; i++) {
+      newBoard[availSpots[i]] = currentToken; // set the empty spot to the current player
+
+      var value = minimax(newBoard, depth + 1, alpha, beta, cpuToken);
+      if (value.score > bestScore) {
+        bestScore = value.score;
+        bestMove.index = availSpots[i];
+        bestMove.score = bestScore;
+      }
+
+      // reset the spot to empty for the next loop itereration
+      newBoard[availSpots[i]] = null;
+
+      alpha = Math.max(alpha, bestScore);
+      if (beta <= alpha)
+        break;
+    }
+    return bestMove;
+  }
 }
