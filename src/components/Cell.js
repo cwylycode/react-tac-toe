@@ -61,8 +61,16 @@ export default function Cell({ cellID, cellValue, gridSize, borders, colors, gam
   }, [gameResults])
 
   return (
-    <button id={cellID} type="button" onClick={() => (onCellClick(cellID))} className={`cell ${animBorder ? "border-blink" : ""} col btn position-relative rounded-0 border-5 ${borders}`}>
-      <img className={`cell-icon ${color} ${cellAnim} ${cellAnim ? "" : "invisible"} position-absolute translate-middle`} src={icon}></img>
+    <button
+      id={cellID}
+      type="button"
+      onClick={() => (onCellClick(cellID))}
+      className={`cell ${animBorder ? "border-blink" : ""} col btn position-relative rounded-0 border-5 ${borders}`}>
+      <img
+        className={`cell-icon ${color} ${cellAnim} ${cellAnim ? "" : "invisible"} position-absolute translate-middle`}
+        src={icon}
+        alt="Cell Icon"
+      ></img>
       <div className={`${strike} ${color}`}></div>
     </button>
   )
