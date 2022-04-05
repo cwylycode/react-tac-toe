@@ -4,7 +4,7 @@ import { TOKENS } from "../lib/constants.js"
 
 import { useEffect, useState } from "react"
 
-export default function Cell({ cellID, cellValue, borders, colors, gameResults, onCellClick }) {
+export default function Cell({ cellID, cellValue, gridsize, borders, colors, gameResults, onCellClick }) {
 
   const [icon, setIcon] = useState("")
   const [color, setColor] = useState("")
@@ -44,7 +44,6 @@ export default function Cell({ cellID, cellValue, borders, colors, gameResults, 
         const line = gameResults.winLine
         const strikeType = function () {
           // A strike can be figured out by the first two cells
-          const gridsize = line.length
           switch (line[1]) {
             case line[0] + 1: return "cell-strike-hor"
             case line[0] + gridsize + 1: return "cell-strike-ccw"

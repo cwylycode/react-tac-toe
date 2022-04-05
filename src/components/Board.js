@@ -24,6 +24,7 @@ export default function Board({ board, gridSize, cellColors, gameResults, onCell
               key={i}
               cellID={i}
               cellValue={board[i]}
+              gridSize={gridSize}
               borders={borders}
               colors={cellColors}
               gameResults={gameResults}
