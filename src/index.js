@@ -13,7 +13,7 @@ import useSound from "use-sound"
 
 import * as AI from "./lib/ai"
 import * as storage from "./lib/storage"
-import { AILEVELS, COLORS, GRIDSIZES, TOGGLE, TOKENS } from "./lib/constants"
+import { AILEVELS, COLORS, GRIDSIZES, TOKENS } from "./lib/constants"
 
 import Header from './components/Header'
 import Board from "./components/Board"
@@ -24,7 +24,7 @@ import ModalSettings from "./components/ModalSettings"
 
 const defaultSettings = {
   darkModeActive: (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches),
-  soundActive: TOGGLE.On.value,
+  soundActive: true,
   aiDifficulty: AILEVELS.easy.value,
   gridSize: GRIDSIZES.three.value,
   playerToken: TOKENS.X.value,
@@ -139,7 +139,7 @@ function App() {
   }
 
   function playSound(sfx) {
-    if (settings.soundActive === "true") {
+    if (settings.soundActive) {
       sfx()
     }
   }
